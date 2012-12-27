@@ -1,20 +1,26 @@
 <?xml version="1.0" ?>
 <?xml-stylesheet type="text/xsl" href="rageml.xsl"?>
 <rage-comic>
+	<panel><trollface>
+		ur a noob, and if you disagree then you betray your naive 
+		inability to summon advanced skill or knowledge.
+	</trollface></panel>
+	<panel><trollface/></panel>
+	<panel><trollface/></panel>
+	<panel><trollface/></panel>
+	<panel><trollface/></panel>
+	<panel><trollface/></panel>
 	<panel>
-		<trollface who="friend">Bet you can't drink a whole 
-			bottle of tabasco</trollface>
+		<closeup><trollface/></closeup>
+	</panel>
+	<panel><rage/></panel>
+	<panel>
+		<closeup><challenge-accepted/></closeup>
 	</panel>
 	<panel>
-		<challenge-accepted who="me"/>
+		<narration>Later that day... something exciting happened and I'm sure you'llagree it was amazing.</narration>
 	</panel>
 	<panel>
-		<narration>Later...</narration>
-	</panel>
-	<panel size="large">
-		<rage who="me">FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU</rage>
-	</panel>
-	<panel>
-		<narration>~ Fin ~</narration>
+		<closeup><rage /></closeup>
 	</panel>
 </rage-comic>
