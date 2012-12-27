@@ -1,26 +1,95 @@
 <?xml version="1.0" ?>
 <?xml-stylesheet type="text/xsl" href="rageml.xsl"?>
 <rage-comic>
-	<panel><trollface>
-		ur a noob, and if you disagree then you betray your naive 
-		inability to summon advanced skill or knowledge.
-	</trollface></panel>
-	<panel><trollface/></panel>
-	<panel><trollface/></panel>
-	<panel><trollface/></panel>
-	<panel><trollface/></panel>
-	<panel><trollface/></panel>
+	
+	<!--
+		Layouts
+	
+		[ narration ]  / blaaaaaaaaa \   
+		               \ rage aaaaaa /		             		            
+		/   blah    \
+		\ trollface /
+		
+		/   blah    \
+		\ challenge /
+		
+		+- - - - - - -+
+		|  narration  |
+		|- - - - - - -|
+		|+- - - - - -+|
+		|| tf  |+- -+||
+		||     ||drp|||
+		||     |+- -+||
+		|+- - - - - -+|
+		+- - - - - - -+
+		
+		( - -)   (0 0 )(0 0 )
+		  A talking to B & C
+		  		  
+		<panel>
+			<!- distinguishing looks generated according to order of 
+				appearence and m/f ->
+			<!- "who" attribute used to reference same character to
+				get same appearence. Tries to place same character on
+				same side of panel  ->
+			<derp who="sue" sex="f" />
+			<derp who="me" sex="m" />
+		</panel>
+		<panel>
+			<trollface />
+		</panel>
+		
+		- - - - - - - - - -
+		
+		<panel>
+			<derp>herp derp</derp>
+			<group>
+				<trollface>what</trollface>
+				<trollface />
+				Yes we agree
+			</group>
+		</panel>
+		
+		<!- elements in panel are lines of dialogue. Same character 
+			can speak twice in same panel ->
+		<panel>
+			<derp who="a">knock knock</derp>
+			<trollface who="b">who's there</trollface>
+			<derp who="a">doctor</derp>
+			<trollface who="b">hello doctor!</trollface>
+		</panel>
+		
+		- - - - - - - - - - 
+		
+		<!- Labels are rendered beside characters and stuff ->
+		<panel>
+			<derp who="me" label="me derping around">hi</derp>
+			<derp who="gf" sex="f" label="my girlfriend">hi</derp>
+		</panel>
+		
+		- - - - - - - - - - 
+		
+		<!- "to" attribute indicates who character is addressing.
+			if omitted, assumes all other characters  ->
+		<panel>
+			<derp who="me" to="gf">yo</derp>
+			<derp who="gf" to="other">Who's he talking to?</derp>
+			<derp who="other" />
+		</panel>
+		
+	-->
+	
 	<panel>
-		<closeup><trollface/></closeup>
-	</panel>
-	<panel><rage/></panel>
-	<panel>
-		<closeup><challenge-accepted/></closeup>
+		<derp who="sue" />
+		<derp who="me" />
+		<derp />
 	</panel>
 	<panel>
-		<narration>Later that day... something exciting happened and I'm sure you'llagree it was amazing.</narration>
+		<lol who="me" />
+		<okay />
 	</panel>
 	<panel>
-		<closeup><rage /></closeup>
+		<rage who="sue" />
 	</panel>
+	
 </rage-comic>
