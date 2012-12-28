@@ -2,11 +2,6 @@
 <stylesheet version="1.0" xmlns="http://www.w3.org/1999/XSL/Transform" 
 		xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
-	<!--
-		TODO: size of faces should depend on number of them in panel
-		TODO: way of labelling characters
-	-->
-
 	<output method="xml" version="1.0" encoding="utf-8"/>
 
 	<variable name="PANEL_W" select="350" />
@@ -23,25 +18,50 @@
 	
 	<template match="panel">
 		<variable name="panelnum" select="position() - 1" />
-		<svg:rect x="{ ($panelnum mod 2) * $PANEL_W + $BORDER_W }" 
-				y="{ floor($panelnum div 2) * $PANEL_H + $BORDER_H }" 
-				width="{ $PANEL_W }" height="{ $PANEL_H }" stroke="black" stroke-width="3" fill="white" fill-opacity="0.75"/>
-		<apply-templates />
+		<variable name="panelx" select="($panelnum mod 2) * $PANEL_W + $BORDER_W" />
+		<variable name="panely" select="floor($panelnum div 2) * $PANEL_H + $BORDER_H" />
+		<variable name="numchars" select="count(*[name()!='narration'])"/>
+		<svg:rect x="{ $panelx }" y="{ $panely }" 
+				width="{ $PANEL_W }" height="{ $PANEL_H }" stroke="black" 
+				stroke-width="3" fill="white" fill-opacity="0.75"/>
+		<for-each select="*[name()!='narration']">
+			<variable name="charnum" select="position() - 1" />
+			<apply-templates select=".">
+				<with-param name="x" select="$panelx + $PANEL_W div $numchars * $charnum" />
+				<with-param name="y" select="$panely" />
+				<with-param name="width" select="$PANEL_W div $numchars" />
+				<with-param name="height" select="$PANEL_H" />
+				<with-param name="seqfrac" select="$charnum div $numchars" />
+			</apply-templates>
+		</for-each>
 	</template>
 	
 	<template match="trollface">
-		<variable name="panelnum" select="count(ancestor::panel/preceding-sibling::*)" />
-		<variable name="panelx" select="($panelnum mod 2) * $PANEL_W + $BORDER_W" />
-		<variable name="panely" select="floor($panelnum div 2) * $PANEL_H + $BORDER_H" />
-		<svg:image x="{ $panelx }" y="{ $panely + $PANEL_H * 0.25 }"
-				width="{ $PANEL_W }" height="{ $PANEL_H * 0.75}"
+		<param name="x" />
+		<param name="y" />
+		<param name="width" />
+		<param name="height" />
+		<param name="seqfrac" />
+		<svg:image x="{ $x }" y="{ $y + $height * 0.5 }"
+				width="{ $width }" height="{ $height * 0.5 }"
 				xlink:href="images/trollface.png" />
-		<svg:text y="{ $panely+10 }" font-size="14pt" font-family="courier new,courier,monospace" 
-				fill="black" text-anchor="middle">
+		<svg:text y="{ $y + 25 + $height * 0.5 * $seqfrac }" font-size="18px" 
+				font-family="courier new,courier,monospace" fill="white" 
+				text-anchor="middle" stroke="white" stroke-width="6">
 			<call-template name="wrap-text">
-				<with-param name="x" select="$panelx + $PANEL_W div 2" />
+				<with-param name="x" select="$x + $width * 0.5" />
 				<with-param name="lineheight" select="20" />
-				<with-param name="chars" select="30" />
+				<with-param name="chars" select="round($width div 12)" />
+				<with-param name="text" select="normalize-space(text())"/>
+			</call-template>
+		</svg:text>
+		<svg:text y="{ $y + 25 + $height * 0.5 * $seqfrac }" font-size="18px" 
+				font-family="courier new,courier,monospace" fill="black" 
+				text-anchor="middle" stroke="none">
+			<call-template name="wrap-text">
+				<with-param name="x" select="$x + $width * 0.5" />
+				<with-param name="lineheight" select="20" />
+				<with-param name="chars" select="round($width div 12)" />
 				<with-param name="text" select="normalize-space(text())"/>
 			</call-template>
 		</svg:text>

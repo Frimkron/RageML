@@ -3,6 +3,17 @@
 <rage-comic>
 	
 	<!--
+		Feature TODO:
+			* multiple characters per panel - wip
+			* character dialogue and narration in panel
+			* "who" attribute
+			* multiple dialog lines per panel
+			* appearence by number
+			* "sex" attribute
+			* "to" attribute
+			* closeup panel
+			* Labels
+			
 		Layouts
 	
 		[ narration ]  / blaaaaaaaaa \   
@@ -80,16 +91,17 @@
 	-->
 	
 	<panel>
-		<derp who="sue" />
-		<derp who="me" />
-		<derp />
+		<narration>Meanwhile...</narration>
+		<trollface>hi there</trollface>
+		<trollface>why hello</trollface>
+		<trollface>Fancy meeting you fine gents on a wonderous day such as this</trollface>
 	</panel>
 	<panel>
-		<lol who="me" />
-		<okay />
+		<trollface>It is with great pleasure I introduce to you blah blah blah!</trollface>
 	</panel>
 	<panel>
-		<rage who="sue" />
+		<trollface>Hey baby how about a drink?</trollface>
+		<trollface>Okay sugar I'll have a wormdoo</trollface>
 	</panel>
 	
 </rage-comic>
