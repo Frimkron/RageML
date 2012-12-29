@@ -21,6 +21,11 @@
 		<variable name="panelx" select="($panelnum mod 2) * $PANEL_W + $BORDER_W" />
 		<variable name="panely" select="floor($panelnum div 2) * $PANEL_H + $BORDER_H" />
 		<variable name="numchars" select="count(*[name()!='narration'])"/>
+		<variable name="textlen">
+			<call-template name="sum-lengths">
+				<with-param name="nodes" select="*[name()!='narration']" />
+			</call-template>
+		</variable>
 		<svg:rect x="{ $panelx }" y="{ $panely }" 
 				width="{ $PANEL_W }" height="{ $PANEL_H }" stroke="black" 
 				stroke-width="3" fill="white" fill-opacity="0.75"/>
@@ -31,9 +36,14 @@
 				<with-param name="y" select="$panely" />
 				<with-param name="width" select="$PANEL_W div $numchars" />
 				<with-param name="height" select="$PANEL_H" />
-				<with-param name="seqfrac" select="$charnum div $numchars" />
+				<with-param name="seqfrac" select="string-length(text()) div $textlen" />
 			</apply-templates>
 		</for-each>
+	</template>
+	
+	<template name="characters">
+		<param name="numchars" />
+		<param name="textlen" />
 	</template>
 	
 	<template match="trollface">
@@ -205,6 +215,23 @@
 					<with-param name="text" select="$tail" />
 					<with-param name="line" select="$appended" />
 				</call-template>
+			</otherwise>
+		</choose>
+	</template>
+	
+	<template name="sum-lengths">
+		<param name="nodes" />
+		<param name="accumulated" select="0"/>
+		<variable name="val" select="$accumulated + string-length($nodes/text())" />
+		<choose>
+			<when test="$nodes/following-sibling::*">
+				<call-template name="sum-lengths"> 
+					<with-param name="nodes" select="$nodes/following-sibling::*" />
+					<with-param name="accumulated" select="$val" />
+				</call-template>
+			</when>
+			<otherwise>
+				<value-of select="$val" />
 			</otherwise>
 		</choose>
 	</template>
