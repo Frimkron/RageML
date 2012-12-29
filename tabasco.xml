@@ -87,21 +87,40 @@
 			<derp who="gf" to="other">Who's he talking to?</derp>
 			<derp who="other" />
 		</panel>
+
+		- - - - - - - - - - -
+		
+		left 
+		aligned
+		
+		       centre 
+		      aligned
+		   
+		               right 
+		             aligned		       		  
+	
+		( ^^)  ( ^^ )  (^^ )
+		
+		- - - - - - - - - - - -
+		
+		Narration only as first and last
 		
 	-->
 	
 	<panel>
-		<narration>Meanwhile...</narration>
-		<trollface>hi there</trollface>
+		<narration>Meanwhile, somethign odd was happening in the blah blah blah</narration>
+		<derp>This sure is a lot of text, ooh boy there are a lot of words here</derp>
 		<trollface>why hello</trollface>
-		<trollface>Fancy meeting you fine gents on a wonderous day such as this</trollface>
+		<derp>Fancy meeting you fine gents on a wonderous day such as this</derp>
+		<trollface>Yup</trollface>
+		<narration>But then...</narration>
 	</panel>
 	<panel>
-		<trollface>It is with great pleasure I introduce to you blah blah blah!</trollface>
+		<derp>It is with great pleasure I introduce to you blah blah blah!</derp>
 	</panel>
 	<panel>
-		<trollface>Hey baby how about a drink?</trollface>
-		<trollface>Okay sugar I'll have a wormdoo</trollface>
+		<trollface>Well this is a story all about how my life got switched turned </trollface>
+		<trollface>updside down so something something sit right there, I'll tell</trollface>
 	</panel>
 	
 </rage-comic>
