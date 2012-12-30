@@ -23,23 +23,24 @@
 		<variable name="panelx" select="($panelnum mod 2) * $PANEL_W + $BORDER_W" />
 		<variable name="panely" select="floor($panelnum div 2) * $PANEL_H + $BORDER_H" />
 		<variable name="charnodes" select="derp|trollface" />
-		<variable name="startnarrlen" select="string-length(*[position()=1 and name()='narration']/text())" />
-		<variable name="endnarrlen" select="string-length(*[position()=last() and name()='narration']/text())" />
+		<variable name="startnarrnode" select="*[position()=1 and name()='narration']" />
+		<variable name="endnarrnode" select="*[position()=last() and name()='narration']" />
+		<variable name="startnarrheight" select="boolean($startnarrnode) * 50" />
+		<variable name="endnarrheight" select="boolean($endnarrnode) * 50" />
 		<variable name="chartextlen">
 			<call-template name="sum-lengths">
 				<with-param name="nodes" select="$charnodes" />
 			</call-template>
 		</variable>
-		<variable name="sumtextlen" select="$startnarrlen + $endnarrlen + $chartextlen" />
 		<svg:rect x="{ $panelx }" y="{ $panely }" 
 				width="{ $PANEL_W }" height="{ $PANEL_H }" stroke="black" 
 				stroke-width="3" fill="white" fill-opacity="0.75"/>
-		<if test="*[position()=1 and name()='narration']">
+		<if test="$startnarrnode">
 			<call-template name="narration-text">
-				<with-param name="x" select="$panelx + 15" />
-				<with-param name="y" select="$panely + 15" />
-				<with-param name="width" select="$PANEL_W - 30" />
-				<with-param name="text" select="narration[1]/text()" />
+				<with-param name="x" select="$panelx + 10" />
+				<with-param name="y" select="$panely + 10" />
+				<with-param name="width" select="$PANEL_W - 20" />
+				<with-param name="text" select="$startnarrnode/text()" />
 			</call-template>
 		</if>
 		<call-template name="panel-characters">
@@ -47,17 +48,16 @@
 			<with-param name="numchars" select="count($charnodes)" />
 			<with-param name="textlen" select="$chartextlen" />			
 			<with-param name="x" select="$panelx" />
-			<with-param name="y" select="$panely + $PANEL_H * ($startnarrlen div $sumtextlen)" />
+			<with-param name="y" select="$panely + $startnarrheight" />
 			<with-param name="width" select="$PANEL_W" />
-			<with-param name="height" select="$PANEL_H * ($chartextlen div $sumtextlen)" />
+			<with-param name="height" select="$PANEL_H - $startnarrheight - $endnarrheight" />
 		</call-template>
-		<if test="*[position()=last() and name()='narration']">
+		<if test="$endnarrnode">
 			<call-template name="narration-text">
-				<with-param name="x" select="$panelx + 15" />
-				<with-param name="y" select="$panely + $PANEL_H * ($startnarrlen div $sumtextlen)
-					+ $PANEL_H * ($chartextlen div $sumtextlen) + 15" />
-				<with-param name="width" select="$PANEL_W - 30" />
-				<with-param name="text" select="narration[position()=last()]/text()" />
+				<with-param name="x" select="$panelx + 10" />
+				<with-param name="y" select="$panely + $PANEL_H - $endnarrheight + 10" />
+				<with-param name="width" select="$PANEL_W - 20" />
+				<with-param name="text" select="$endnarrnode/text()" />
 			</call-template>
 		</if>
 	</template>
@@ -230,12 +230,12 @@
 		<param name="y" />
 		<param name="width" />
 		<param name="text" />
-		<svg:text y="{ $y }" font-size="18px" font-family="courier new,courier,monospace" 
+		<svg:text y="{ $y }" font-size="16px" font-family="courier new,courier,monospace" 
 				fill="black" text-anchor="left" stroke="none">
 			<call-template name="wrap-text">
 				<with-param name="x" select="$x" />
-				<with-param name="lineheight" select="20" />
-				<with-param name="chars" select="round($width div 12)" />
+				<with-param name="lineheight" select="18" />
+				<with-param name="chars" select="round($width div 11)" />
 				<with-param name="text" select="normalize-space($text)"/>
 			</call-template>
 		</svg:text>
@@ -255,12 +255,12 @@
 				<with-param name="text" select="normalize-space($text)"/>
 			</call-template>
 		</svg:text>-->
-		<svg:text y="{ $y }" font-size="18px" font-family="courier new,courier,monospace" 
+		<svg:text y="{ $y }" font-size="16px" font-family="courier new,courier,monospace" 
 				fill="black" text-anchor="middle" stroke="none">
 			<call-template name="wrap-text">
 				<with-param name="x" select="$x" />
-				<with-param name="lineheight" select="20" />
-				<with-param name="chars" select="round($width div 12)" />
+				<with-param name="lineheight" select="18" />
+				<with-param name="chars" select="round($width div 11)" />
 				<with-param name="text" select="normalize-space($text)"/>
 			</call-template>
 		</svg:text>

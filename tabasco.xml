@@ -4,8 +4,6 @@
 	
 	<!--
 		Feature TODO:
-			* multiple characters per panel - wip
-			* character dialogue and narration in panel
 			* "who" attribute
 			* multiple dialog lines per panel
 			* appearence by number
@@ -105,17 +103,126 @@
 		
 		Narration only as first and last
 		
+		- - - - - - - - - - - - 
+		
+		Must allow empty character elements in panel in order to
+		indicate the presence of a character with no lines
+		
+		What happens if the same character has multiple lines in a 
+		panel, but using different representations? Shouldn't be 
+		allowed!
+
+		             [ panel ]
+		                 |
+		                 ^
+		[ face ]--<[ appearence ]--<[ line ]
+		                 v
+		                 |
+		           [ character ]
+		   
+		           +------------+        
+		   line 2 / ...   ...  /|   line should refer to 1 and only
+		  line 1 / ...   ...  / |   1 appearence, but currently each
+		        +------------+  |   can have its own face
+		panel 1 | derp troll |  +
+		        |            | /
+		panel 2 |srsly dpina |/
+		        +------------+
+		           me    gf
+		           
+		Ideally lines should be expressed in reading order
+		           
+		<character name="me" label="le me"/>
+		<character name="gf" label="le girlfriend"/>
+		<panel>
+			<face who="me" which="derp" />            <!- shouldn't allow multiple ->
+			<face who="gf" which="trollface" />       <!- faces for same character ->
+			<line who="me">Look at that thing</line>
+			<line who="gf">I don't see it</line>
+			<line who="me">It's right there</line>
+			<line who="gf">Nope</line>
+		</panel>
+		<panel>
+			<face who="me" which="rage" />
+			<line who="me">FFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUU</line>
+		</panel>
+		
+		- - - 
+		
+		<panel>
+			<face who="me" which="derp">
+				<line number="1">blah blah</line>
+				<line number="3">stuff</line>
+			</face>
+			<face who="gf" which="trollface">
+				<line number="2">yadda yadda</line>
+			</face>
+		</panel>
+		<panel>
+			<face who="me" which="rage">
+				<line>FFFFFFUUUUUUUUU</line>
+			</face>
+		</panel>
+		
+		- - - 
+		
+		<!- a? b? c? ... panel+ ->
+		<a label="le me" />          <!- Mapping characters to a,b,c ->
+		<b label="le girlfriend" />  <!- is not very intuitive       ->
+		<panel>
+			<!-- a-face? b-face? c-face? ... (a-line|b-line|c-line|...)* ->
+			<a-face face="derp" />
+			<b-face face="trollface" />
+			<a-line>Hi there</a-line>
+			<b-line>Hello mate</b-line>
+			<a-line>What</a-line>
+			<b-line>lol</b-line>
+		</panel>
+		<panel>
+			<a-face face="rage" />
+			<a-line>FFFFUUUUUUUUUUU</a-line>
+			<!- Shorthand: -> 
+			<rage>FFFFUUUUUUUUU</rage>
+		</panel>
+		
+		- - -
+		
+		<panel>
+			<derp>Hello</derp>            <!- But here, author can still mistakenly ->
+			<trollface>What?</trollface>  <!- assign multiple faces to same character ->
+			<reply who="derp">I said...</reply> <!- if unspecified, characters      ->
+			<reply who="trollface">LOL</reply>  <!- take name of face with appended ->
+			                                    <!- number if necessary             ->
+		</panel>
+		<panel>
+			<rage />
+		</panel>
+		
+		- - - 
+		
+		<!- Need to delcare characters up here? Maybe for global 
+		    attributes such as appearence  ->
+		<panel>
+			<!- ( a? b? c? ... (a-reply|b-reply|c-reply|...)* )
+				| rage | challenge-accepted | ... ->
+			<a face="derp" label="le me">Hi there</a>
+			<b face="trollface" label="le girlfriend">Hi</b>
+			<a-reply>What's ur name?</a-reply>
+			<b-reply>Adolf</b-reply>
+		</panel>
 	-->
 	
 	<panel>
-		<narration>Meanwhile, somethign odd was happening in the blah blah blah</narration>
-		<derp>This sure is a lot of text, ooh boy there are a lot of words here</derp>
+		<narration>Meanwhile, at the library</narration>
+		<derp>This sure is a lot of text</derp>
 		<trollface>why hello</trollface>
-		<derp>Fancy meeting you fine gents on a wonderous day such as this</derp>
+		<derp>Fancy meeting you fine gents</derp>
 		<trollface>Yup</trollface>
-		<narration>But then...</narration>
+		<narration>Alas, it came to be that they could only fit a single
+			line of text in the narration sections :(</narration>
 	</panel>
 	<panel>
+		<narration>But:</narration>
 		<derp>It is with great pleasure I introduce to you blah blah blah!</derp>
 	</panel>
 	<panel>
