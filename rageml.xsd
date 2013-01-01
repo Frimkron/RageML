@@ -1,0 +1,994 @@
+<?xml version="1.0" ?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="http://markfrimston.co.uk/rageml"
+		xmlns:rg="http://markfrimston.co.uk/rageml"
+		elementFormDefault="qualified">
+
+	<!-- TODO:
+		* allowing text in character elements
+		* "to" attribute
+	-->
+			
+	<element name="rg:comic">
+		<complexType>
+			<sequence minOccurs="1" maxOccurs="unbounded">
+				<element ref="rg:panel" />
+			</sequence>
+		</complexType>
+	</element>
+	
+	<element name="rg:panel">
+		<complexType>
+			<sequence>
+				<element ref="rg:narration" minOccurs="0" maxOccurs="1" />
+				<group ref="unordered-characters" minOccurs="0"/>
+				<choice minOccurs="0" maxOccurs="unbounded">
+					<choice>
+						<element ref="a-reply" />
+						<element ref="b-reply" />
+						<element ref="c-reply" />
+						<element ref="d-reply" />
+						<element ref="e-reply" />
+					</choice>
+					<group ref="faces" />
+				</choice>
+				<element ref="rg:narration" minOccurs="0" maxOccurs="1" />
+			</sequence>
+		</complexType>
+	</element>
+	
+	<element name="rg:narration" type="token" />
+	
+	<element name="rg:a" type="rg:character" />
+	<element name="rg:b" type="rg:character" />
+	<element name="rg:c" type="rg:character" />
+	<element name="rg:d" type="rg:character" />
+	<element name="rg:e" type="rg:character" />
+	
+	<element name="rg:a-reply" type="token" />
+	<element name="rg:b-reply" type="token" />
+	<element name="rg:c-reply" type="token" />
+	<element name="rg:d-reply" type="token" />
+	<element name="rg:e-reply" type="token" />
+	
+	<element name="rg:derp" type="token" />
+	<element name="rg:trollface" type="token" />
+	<element name="rg:rage" type="token" />
+	<element name="rg:challenge-accepted" type="token" />
+
+	
+	<!-- ====================================================== -->
+
+	
+	<complexType name="rg:character">
+		<group ref="faces" minOccurs="0" maxOccurs="1" />
+		<attribute name="rg:label" type="token" />
+		<attribute name="rg:sex">
+			<restriction base="token">
+				<pattern value="m|f" />
+			</restriction>
+		</attribute>
+	</complexType>
+	
+	<group id="faces">
+		<choice>
+			<element ref="rg:derp" />
+			<element ref="rg:trollface" />
+			<element ref="rg:rage" />
+			<element ref="rg:challenge-accepted" />
+		</choice>
+	</group>
+	
+	<!-- Rediculous expansion to allow up to one of each of 
+		a-e in any order, combined with other elements -->
+	<group id="unordered-characters">
+		<choice>
+    		<sequence>
+        		<element ref="rg:a" />
+        		<choice minOccurs="0">
+            		<sequence>
+                		<element ref="rg:b" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:c" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:d" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:e" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+        		</choice>
+    		</sequence>
+    		<sequence>
+        		<element ref="rg:b" />
+        		<choice minOccurs="0">
+            		<sequence>
+                		<element ref="rg:a" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:c" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:d" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:e" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+        		</choice>
+    		</sequence>
+    		<sequence>
+        		<element ref="rg:c" />
+        		<choice minOccurs="0">
+            		<sequence>
+                		<element ref="rg:a" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:b" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:d" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:e" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+        		</choice>
+    		</sequence>
+    		<sequence>
+        		<element ref="rg:d" />
+        		<choice minOccurs="0">
+            		<sequence>
+                		<element ref="rg:a" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:b" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:c" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:e"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:e" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:e" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:e" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+        		</choice>
+    		</sequence>
+    		<sequence>
+        		<element ref="rg:e" />
+        		<choice minOccurs="0">
+            		<sequence>
+                		<element ref="rg:a" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:b" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:c" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:d"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:d" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:d" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+            		<sequence>
+                		<element ref="rg:d" />
+                		<choice minOccurs="0">
+                    		<sequence>
+                        		<element ref="rg:a" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:b" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:c"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:c" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                    		<sequence>
+                        		<element ref="rg:c" />
+                        		<choice minOccurs="0">
+                            		<sequence>
+                                		<element ref="rg:a" />
+                                		<element ref="rg:b"  minOccurs="0"/>
+                            		</sequence>
+                            		<sequence>
+                                		<element ref="rg:b" />
+                                		<element ref="rg:a"  minOccurs="0"/>
+                            		</sequence>
+                        		</choice>
+                    		</sequence>
+                		</choice>
+            		</sequence>
+        		</choice>
+    		</sequence>
+		</choice>
+	</group>
+	
+</schema>
