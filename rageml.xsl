@@ -17,8 +17,69 @@
 		</svg:svg>
 	</template>
 	
+	
+	<template name="panels">
+	
+		<param name="nodes" />
+		<param name="panelnum" />
+		<param name="df-a-face" select="derp" /> <param name="df-a-sex" select="m" />
+		<param name="df-b-face" select="derp" /> <param name="df-b-sex" select="m" />
+		<param name="df-c-face" select="derp" /> <param name="df-c-sex" select="m" />
+		<param name="df-d-face" select="derp" /> <param name="df-d-sex" select="m" />
+		<param name="df-e-face" select="derp" /> <param name="df-e-sex" select="m" />
+		
+		<variable name="panelx" select="TODO" />
+		<variable name="panely" select="TODO" />		
+		<variable name="a-face"><choose>
+				<when test="$nodes/a/*"><value-of select="$nodes/a/*/name()" /></when>
+				<otherwise><value-of select="$df-a-face" /></otherwise></variable>
+		<variable name="a-sex"><choose>
+				<when test="$nodes/a/@sex"><value-of select="$nodes/a/@sex" /></when>
+				<otherwise><value-of select="$df-a-sex" /></otherwise></variable>
+		<variable name="b-face"><choose>
+				<when test="$nodes/b/*"><value-of select="$nodes/b/*/name()" /></when>
+				<otherwise><value-of select="$df-b-face" /></otherwise></variable>
+		<variable name="b-sex"><choose>
+				<when test="$nodes/b/@sex"><value-of select="$nodes/b/@sex" /></when>
+				<otherwise><value-of select="$df-b-sex" /></otherwise></variable>
+		<variable name="c-face"><choose>
+				<when test="$nodes/c/*"><value-of select="$nodes/c/*/name()" /></when>
+				<otherwise><value-of select="$df-c-face" /></otherwise></variable>
+		<variable name="c-sex"><choose>
+				<when test="$nodes/c/@sex"><value-of select="$nodes/c/@sex" /></when>
+				<otherwise><value-of select="$df-c-sex" /></otherwise></variable>
+		<variable name="d-face"><choose>
+				<when test="$nodes/d/*"><value-of select="$nodes/d/*/name()" /></when>
+				<otherwise><value-of select="$df-d-face" /></otherwise></variable>
+		<variable name="d-sex"><choose>
+				<when test="$nodes/d/@sex"><value-of select="$nodes/d/@sex" /></when>
+				<otherwise><value-of select="$df-d-sex" /></otherwise></variable>
+		<variable name="e-face"><choose>
+				<when test="$nodes/e/*"><value-of select="$nodes/e/*/name()" /></when>
+				<otherwise><value-of select="$df-e-face" /></otherwise></variable>
+		<variable name="e-sex"><choose>
+				<when test="$nodes/e/@sex"><value-of select="$nodes/e/@sex" /></when>
+				<otherwise><value-of select="$df-e-sex" /></otherwise></variable>
+				
+		<call-template name="panels">
+			<with-param name="nodes" select="$nodes[position() &gt; 1]" />	
+			<with-param name="panelnum" select="$panelnum + 1" />
+			<with-param name="df-a-face" select="$a-face" />
+			<with-param name="df-a-sex" select="$a-sex" />
+			<with-param name="df-b-face" select="$b-face" />
+			<with-param name="df-b-sex" select="$b-sex" />
+			<with-param name="df-c-face" select="$c-face" />
+			<with-param name="df-c-sex" select="$c-sex" />
+			<with-param name="df-d-face" select="$d-face" />
+			<with-param name="df-d-sex" select="$d-sex" />
+			<with-param name="df-e-face" select="$e-face" />
+			<with-param name="df-e-sex" select="$e-sex" />
+		</call-template>
+				
+	</template>
+	
 	<!-- Renders a single panel -->
-	<template match="panel">
+	<!--<template match="panel">
 		<variable name="panelnum" select="position() - 1" />
 		<variable name="panelx" select="($panelnum mod 2) * $PANEL_W + $BORDER_W" />
 		<variable name="panely" select="floor($panelnum div 2) * $PANEL_H + $BORDER_H" />
@@ -60,10 +121,10 @@
 				<with-param name="text" select="$endnarrnode/text()" />
 			</call-template>
 		</if>
-	</template>
+	</template>-->
 	
 	<!-- Invoked recursively to render characters in panel -->
-	<template name="panel-characters">
+	<!--<template name="panel-characters">
 		<param name="nodes" />
 		<param name="numchars" />
 		<param name="textlen" />
@@ -95,10 +156,10 @@
 				<with-param name="accum-len" select="$accum-len + string-length($currnode/text())" />
 			</call-template>
 		</if>
-	</template>
+	</template>-->
 	
 	<!-- Renders a trollface dialogue line -->
-	<template match="trollface">
+	<!--<template match="trollface">
 		<param name="x" />
 		<param name="y" />
 		<param name="width" />
@@ -113,10 +174,10 @@
 			<with-param name="width" select="$width" />
 			<with-param name="text" select="text()" />
 		</call-template>
-	</template>
+	</template>-->
 	
 	<!-- Renders a derpy guy dialogue line -->
-	<template match="derp">
+	<!--<template match="derp">
 		<param name="x" />
 		<param name="y" />
 		<param name="width" />
@@ -131,7 +192,7 @@
 			<with-param name="width" select="$width" />
 			<with-param name="text" select="text()" />
 		</call-template>
-	</template>
+	</template>-->
 	
 	<!--<template match="challenge-accepted">
 		<variable name="panelnum" select="count(ancestor::panel/preceding-sibling::*)" />
@@ -225,7 +286,7 @@
 		</svg:image>
 	</template>-->
 	
-	<template name="narration-text">
+	<!--<template name="narration-text">
 		<param name="x" />
 		<param name="y" />
 		<param name="width" />
@@ -239,7 +300,7 @@
 				<with-param name="text" select="normalize-space($text)"/>
 			</call-template>
 		</svg:text>
-	</template>
+	</template>-->
 	
 	<template name="dialogue-text">
 		<param name="x" />

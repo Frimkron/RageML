@@ -426,4 +426,80 @@ Unnamed faces are just placed in order of appearence
 	<derp who="a">foo</derp>
 	<trollface who="a">bar</trollface>
 
-       
+- - - - - - - - - - -
+
+If character tags are to change appearence state for current *and* subsequent
+frames until changed, panels will need to be handled by a recursive template,
+each passing the previous character states into the next
+
+	<param name="a-face" select="derp" />
+	<param name="b-face" select="trollface"/ >
+	...
+	
+I dont think templates can be called by name dynamically - probably have to 
+dispatch using a choose statement instead
+
+	<choose>
+		<when test="$face = 'derp'">
+			<call-template name="derp" />
+		</when>
+		<when test="$face = 'trollface'">
+			<call-template name="trollface" />
+		</when>
+		...
+	</choose>
+	
+- - - - - - - - - -
+
+Is there an easier way to do *all* of this? One that doesn't require building 
+a model of the characters *in frigging XSL*? Is there something that maps more
+directly onto the representation?
+
+	+----------------+
+	|line a1         |
+	|        line b1 |
+	|line a2         |
+	|+------++------+|
+	|| face || face ||
+	||  a   ||  b   ||
+	|+------++------+|
+	+----------------+
+
+	<panel>
+		<chr name="me" face="derp" pos="sw" />
+		<chr name="gf" face="trollface" pos="se" />
+		<line who="me">Hi there</line>
+		<line who="gf">Hi</line>
+		<line who="me">How's it going?</line>		
+	</panel>
+	<panel>
+		<chr face="rage" pos="c" />
+	</panel>
+	
+It's just not as nice. And it still requires some modelling to place the 
+dialogue in the right place, especially if the characters can be positioned
+anywhere in the panel
+
+- - - - - - - - - -
+
+Once we have the current apperence attributes for each of the named characters,
+we need to establish the faces that appear in the current panel.
+	
+	d	e	trollface	a	derp
+
+	<variable name="total-chrs" select="count($panelnode/*[name()!='narration'
+		and name()!='a-line' and name()!='b-line' and name()!='c-line' 
+		and name()!='d-line' and name()!='e-line'])" />	
+		
+	<variable name="total-lines" select="count($panelnode/*[name()!='narration']/descendant::text())" />
+	
+Can happily place unnamed characters on the end.
+
+Need to somehow iterate over characters in a,b,c,derp order to render faces,
+But then iterate over lines in order of appearence and cross-reference them
+with their face to render them at the correct coordinates. And *then* there's
+the relative vertical spacing to consider.
+
+Each character can select its dialogue lines. Upon doing this, the position of
+each line in the panel's lines can be established by taking the count of 
+previous siblings which aren't `<narration>` nodes. Simple.

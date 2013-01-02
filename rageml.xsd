@@ -5,72 +5,84 @@
 		elementFormDefault="qualified">
 
 	<!-- TODO:
-		* allowing text in character elements
 		* "to" attribute
 	-->
 			
-	<element name="rg:comic">
+	<element name="comic">
 		<complexType>
 			<sequence minOccurs="1" maxOccurs="unbounded">
 				<element ref="rg:panel" />
 			</sequence>
+			<anyAttribute />
 		</complexType>
 	</element>
 	
-	<element name="rg:panel">
+	<element name="panel">
 		<complexType>
 			<sequence>
 				<element ref="rg:narration" minOccurs="0" maxOccurs="1" />
-				<group ref="unordered-characters" minOccurs="0"/>
+				<group ref="rg:unordered-characters" minOccurs="0"/>
 				<choice minOccurs="0" maxOccurs="unbounded">
 					<choice>
-						<element ref="a-reply" />
-						<element ref="b-reply" />
-						<element ref="c-reply" />
-						<element ref="d-reply" />
-						<element ref="e-reply" />
+						<element ref="rg:a-reply" />
+						<element ref="rg:b-reply" />
+						<element ref="rg:c-reply" />
+						<element ref="rg:d-reply" />
+						<element ref="rg:e-reply" />
 					</choice>
-					<group ref="faces" />
+					<group ref="rg:faces" />
 				</choice>
 				<element ref="rg:narration" minOccurs="0" maxOccurs="1" />
 			</sequence>
+			<anyAttribute />
 		</complexType>
 	</element>
 	
-	<element name="rg:narration" type="token" />
+	<element name="narration" type="rg:attr-token" />
 	
-	<element name="rg:a" type="rg:character" />
-	<element name="rg:b" type="rg:character" />
-	<element name="rg:c" type="rg:character" />
-	<element name="rg:d" type="rg:character" />
-	<element name="rg:e" type="rg:character" />
+	<element name="a" type="rg:character" />
+	<element name="b" type="rg:character" />
+	<element name="c" type="rg:character" />
+	<element name="d" type="rg:character" />
+	<element name="e" type="rg:character" />
 	
-	<element name="rg:a-reply" type="token" />
-	<element name="rg:b-reply" type="token" />
-	<element name="rg:c-reply" type="token" />
-	<element name="rg:d-reply" type="token" />
-	<element name="rg:e-reply" type="token" />
+	<element name="a-reply" type="rg:attr-token" />
+	<element name="b-reply" type="rg:attr-token" />
+	<element name="c-reply" type="rg:attr-token" />
+	<element name="d-reply" type="rg:attr-token" />
+	<element name="e-reply" type="rg:attr-token" />
 	
-	<element name="rg:derp" type="token" />
-	<element name="rg:trollface" type="token" />
-	<element name="rg:rage" type="token" />
-	<element name="rg:challenge-accepted" type="token" />
+	<element name="derp" type="rg:attr-token" />
+	<element name="trollface" type="rg:attr-token" />
+	<element name="rage" type="rg:attr-token" />
+	<element name="challenge-accepted" type="rg:attr-token" />
 
 	
 	<!-- ====================================================== -->
 
-	
-	<complexType name="rg:character">
-		<group ref="faces" minOccurs="0" maxOccurs="1" />
-		<attribute name="rg:label" type="token" />
-		<attribute name="rg:sex">
-			<restriction base="token">
-				<pattern value="m|f" />
-			</restriction>
-		</attribute>
+
+	<complexType name="attr-token">
+		<simpleContent>
+			<extension base="token">
+				<anyAttribute />
+			</extension>
+		</simpleContent>
 	</complexType>
 	
-	<group id="faces">
+	<complexType name="character">
+		<group ref="rg:faces" minOccurs="0" maxOccurs="1" />
+		<attribute name="label" type="token" />
+		<attribute name="sex">
+			<simpleType>
+				<restriction base="token">
+					<pattern value="m|f" />
+				</restriction>
+			</simpleType>
+		</attribute>
+		<anyAttribute />
+	</complexType>
+	
+	<group name="faces">
 		<choice>
 			<element ref="rg:derp" />
 			<element ref="rg:trollface" />
@@ -81,7 +93,7 @@
 	
 	<!-- Rediculous expansion to allow up to one of each of 
 		a-e in any order, combined with other elements -->
-	<group id="unordered-characters">
+	<group name="unordered-characters">
 		<choice>
     		<sequence>
         		<element ref="rg:a" />
