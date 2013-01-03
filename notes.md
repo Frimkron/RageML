@@ -503,3 +503,22 @@ the relative vertical spacing to consider.
 Each character can select its dialogue lines. Upon doing this, the position of
 each line in the panel's lines can be established by taking the count of 
 previous siblings which aren't `<narration>` nodes. Simple.
+
+	<template name="character">
+		<param name="panelnode" />
+		<param name="linenodes" />
+		<param name="face" />
+		<param name="sex" />
+		<param name="x" />
+		<param name="y" />
+		<param name="width" />
+		<param name="height" />
+	</template>
+
+	<for-each select="a|b|c|d|e|derp|trollface|...">
+		<order ... />
+		<call-template name="character">
+		
+		</call-template>
+	</for-each>
+

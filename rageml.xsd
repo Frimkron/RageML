@@ -4,10 +4,6 @@
 		xmlns:rg="http://markfrimston.co.uk/rageml"
 		elementFormDefault="qualified">
 
-	<!-- TODO:
-		* "to" attribute
-	-->
-			
 	<element name="comic">
 		<complexType>
 			<sequence minOccurs="1" maxOccurs="unbounded">

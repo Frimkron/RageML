@@ -13,14 +13,28 @@
 	<template match="/">
 		<svg:svg version="1.1" width="{ $PANEL_W * 2 + $BORDER_W * 2 }" 
 				height="{ ceiling(count(/rage-comic/panel) div 2) * $PANEL_H + $BORDER_H * 2}">
-			<apply-templates select="/rage-comic/panel" />
+			<!--<apply-templates select="/rage-comic/panel" />-->
 		</svg:svg>
 	</template>
+	
+	<template name="test">
+		<param name="data" />
+		<svg:text x="20" y="20">
+			<value-of select="$data" />
+		</svg:text>
+		
+		<!--<for-each select="$data">
+			<svg:text x="{@x}" y="{@y}">
+				<value-of select="@text" />
+			</svg:text>
+		</for-each>-->
+		
+	</template>	
 	
 	
 	<template name="panels">
 	
-		<param name="nodes" />
+		<param name="panelnode" />
 		<param name="panelnum" />
 		<param name="df-a-face" select="derp" /> <param name="df-a-sex" select="m" />
 		<param name="df-b-face" select="derp" /> <param name="df-b-sex" select="m" />
@@ -29,54 +43,78 @@
 		<param name="df-e-face" select="derp" /> <param name="df-e-sex" select="m" />
 		
 		<variable name="panelx" select="TODO" />
-		<variable name="panely" select="TODO" />		
-		<variable name="a-face"><choose>
-				<when test="$nodes/a/*"><value-of select="$nodes/a/*/name()" /></when>
-				<otherwise><value-of select="$df-a-face" /></otherwise></variable>
-		<variable name="a-sex"><choose>
-				<when test="$nodes/a/@sex"><value-of select="$nodes/a/@sex" /></when>
-				<otherwise><value-of select="$df-a-sex" /></otherwise></variable>
-		<variable name="b-face"><choose>
-				<when test="$nodes/b/*"><value-of select="$nodes/b/*/name()" /></when>
-				<otherwise><value-of select="$df-b-face" /></otherwise></variable>
-		<variable name="b-sex"><choose>
-				<when test="$nodes/b/@sex"><value-of select="$nodes/b/@sex" /></when>
-				<otherwise><value-of select="$df-b-sex" /></otherwise></variable>
-		<variable name="c-face"><choose>
-				<when test="$nodes/c/*"><value-of select="$nodes/c/*/name()" /></when>
-				<otherwise><value-of select="$df-c-face" /></otherwise></variable>
-		<variable name="c-sex"><choose>
-				<when test="$nodes/c/@sex"><value-of select="$nodes/c/@sex" /></when>
-				<otherwise><value-of select="$df-c-sex" /></otherwise></variable>
-		<variable name="d-face"><choose>
-				<when test="$nodes/d/*"><value-of select="$nodes/d/*/name()" /></when>
-				<otherwise><value-of select="$df-d-face" /></otherwise></variable>
-		<variable name="d-sex"><choose>
-				<when test="$nodes/d/@sex"><value-of select="$nodes/d/@sex" /></when>
-				<otherwise><value-of select="$df-d-sex" /></otherwise></variable>
-		<variable name="e-face"><choose>
-				<when test="$nodes/e/*"><value-of select="$nodes/e/*/name()" /></when>
-				<otherwise><value-of select="$df-e-face" /></otherwise></variable>
-		<variable name="e-sex"><choose>
-				<when test="$nodes/e/@sex"><value-of select="$nodes/e/@sex" /></when>
-				<otherwise><value-of select="$df-e-sex" /></otherwise></variable>
-				
-		<call-template name="panels">
-			<with-param name="nodes" select="$nodes[position() &gt; 1]" />	
-			<with-param name="panelnum" select="$panelnum + 1" />
-			<with-param name="df-a-face" select="$a-face" />
-			<with-param name="df-a-sex" select="$a-sex" />
-			<with-param name="df-b-face" select="$b-face" />
-			<with-param name="df-b-sex" select="$b-sex" />
-			<with-param name="df-c-face" select="$c-face" />
-			<with-param name="df-c-sex" select="$c-sex" />
-			<with-param name="df-d-face" select="$d-face" />
-			<with-param name="df-d-sex" select="$d-sex" />
-			<with-param name="df-e-face" select="$e-face" />
-			<with-param name="df-e-sex" select="$e-sex" />
-		</call-template>
+		<variable name="panely" select="TODO" />
+		<variable name="charnodes" select="$panelnode/*[name()!='narration'
+			and name()!='a-reply' and name()!='b-reply' and name()!='c-reply' 
+			and name()!='d-reply' and name()!='e-reply']" />
+
+		<for-each select="$charnodes">
+			<sort select="concat(string(number(string-length(name()) &gt; 1)),name())" />
+			<!-- character nodes with a-e first -->
+			<!-- now position() should be ok for x positioning -->
+			<!-- how to get face and sex of character? -->
+			<!-- could use a string as a map, using substring-before/after:
+				'|a:derp|b:trollface|c:rage|'
+				substring-before(substring-after(s,'a:'),'|')  -->
+		</for-each>
+
+		<if test="$panelnode/a">
+			<call-template name="character">
+				<with-param name="x" select="$panelx + $PANEL_W div count($charnodes) * 0" />
+				<with-param name="y" select="$panely" />
+				<with-param name="width" select="$PANEL_W div count($charnodes)" />
+				<with-param name="height" select="$PANEL_H" />
+				<with-param name="lines" select="" />
+				<with-param name="face"><choose>
+					<when test="$panelnode/a/*"><value-of select="$panelnode/a/*/name()" /></when>
+					<otherwise><value-of select="$def-a-face" /></otherwise></choose></with-param>
+				<with-param name="sex" select="a-sex"><choose>
+					<when test="$panelnode/a/@sex"><value-of select="$panelnode/a/@sex"/></when>
+					<otherwise><value-of select="$def-a-sex" /></otherwise></choose></with-param>
+			</call-template>			
+		</if>
+		<if test="$panelnode/b">
+		
+		</if>
+		<if test="$panelnode/c">
+		
+		</if>
+		<if test="$panelnode/d">
+		</if>
+		<if test="$panelnode/e">
+		
+		</if>
+	
+		<if test="$panelnode::following-sibling">
+			<call-template name="panels">
+				<with-param name="panelnode" select="$panelnode::following-sibling[1]" />	
+				<with-param name="panelnum" select="$panelnum + 1" />
+				<with-param name="df-a-face" select="$a-face" />
+				<with-param name="df-a-sex" select="$a-sex" />
+				<with-param name="df-b-face" select="$b-face" />
+				<with-param name="df-b-sex" select="$b-sex" />
+				<with-param name="df-c-face" select="$c-face" />
+				<with-param name="df-c-sex" select="$c-sex" />
+				<with-param name="df-d-face" select="$d-face" />
+				<with-param name="df-d-sex" select="$d-sex" />
+				<with-param name="df-e-face" select="$e-face" />
+				<with-param name="df-e-sex" select="$e-sex" />
+			</call-template>
+		</if>
 				
 	</template>
+	
+	<!--<template name="character">
+		<param name="x" />
+		<param name="y" />
+		<param name="width" />
+		<param name="height" />
+		<param name="lines" />
+		<param name="face" />
+		<param name="sex" />
+		
+		
+	</template>-->
 	
 	<!-- Renders a single panel -->
 	<!--<template match="panel">
