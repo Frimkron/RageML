@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <?xml-stylesheet type="text/xsl" href="rageml.xsl"?>
-<comic xmlns="http://markfrimston.co.uk/rageml"
+<comic 	xmlns="http://markfrimston.co.uk/rageml"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:x="http://example.com/foobar"
+		xmlns:x="http://example.com/x"
 		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
 		<narration>Meanwhile, at the library</narration>
@@ -10,11 +10,14 @@
 		<a><trollface>why hello</trollface></a>
 		<c><derp>Fancy meeting you fine gents</derp></c>
 		<d><trollface>Yup</trollface></d>
+		<derp>blah blah</derp>
 		<b-reply>Hi</b-reply>
 		<narration>Alas, it came to be</narration>
 	</panel>
 	<panel>
 		<narration>But:</narration>
+		<b><trollface /></b>
+		<d sex="f" />
 		<derp>It is with great pleasure I introduce to you blah blah blah!</derp>
 	</panel>
 	<panel>
