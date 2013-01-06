@@ -522,3 +522,7 @@ previous siblings which aren't `<narration>` nodes. Simple.
 		</call-template>
 	</for-each>
 
+- - - - - - - -
+
+Next challenge, a face with no text *may* imply some text. For example,
+`<rage />` implies the dialogue "FFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"

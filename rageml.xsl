@@ -13,6 +13,7 @@
 	<variable name="PANEL_H" select="330" /> <!-- Height of each panel -->
 	<variable name="BORDER_W" select="20" /> <!-- Width of space around image -->
 	<variable name="BORDER_H" select="20" /> <!-- Height of space around image -->
+	<variable name="NAMESPACE" select="'http://markfrimston.co.uk/rageml'" /> <!-- Namespace URI -->
 	
 	<!-- Root template -->
 	<template match="/">
@@ -37,10 +38,13 @@
 		<!-- absolute position of panel -->
 		<variable name="panelx" select="$BORDER_W + ($panelnum mod 2) * $PANEL_W" />
 		<variable name="panely" select="$BORDER_H + floor($panelnum div 2) * $PANEL_H" />
+		<!-- nodes representing lines of dialogue in this panel -->
+		<variable name="linenodes" select="$panelnode/*[namespace-uri()=$NAMESPACE 
+			and local-name()!='narration' and descendant::text()]" />
 		<!-- nodes representing character presences in this panel -->
-		<variable name="charnodes" select="$panelnode/*[namespace-uri()=namespace-uri($panelnode) 
-			and local-name()!='narration' and local-name()!='a-reply' and local-name()!='b-reply' 
-			and local-name()!='c-reply' and local-name()!='d-reply' and local-name()!='e-reply']" />	
+		<variable name="charnodes" select="$panelnode/*[namespace-uri()=$NAMESPACE
+			and local-name()!='narration' and substring(local-name(),2)!='-reply']" />	
+		
 		<!-- current states of characters' faces after being overridden -->
 		<variable name="faces">
 			<call-template name="make-faces">
@@ -67,6 +71,7 @@
 			i.e. the order of their visual positioning -->
 		<for-each select="$charnodes">
 			<sort select="concat(string(number(string-length(local-name()) &gt; 1)),local-name())" />
+			<variable name="elname" select="local-name()" />
 			<call-template name="character">
 				<!-- placed in panel according to position in ordered set. Give each character 
 					a vertical slice of the panel space -->
@@ -74,25 +79,27 @@
 				<with-param name="y" select="$panely" />
 				<with-param name="width" select="$PANEL_W div count($charnodes)" />
 				<with-param name="height" select="$PANEL_H" />
-				<with-param name="lines" select="TODO" />
+				<!-- direct children of panel representing dialogue lines for character -->
+				<with-param name="linenodes" select=". | $linenodes[local-name()=concat($elname,'-reply')]" />
+				<with-param name="totallines" select="count($linenodes)" />
 				<!-- for named characters, look up overidden face. For others, just use face name -->
 				<with-param name="face">
 					<choose>
-						<when test="string-length(local-name()) = 1">
+						<when test="string-length($elname) = 1">
 							<value-of select="substring-before(substring-after(
-								$faces,concat('[',local-name(),':')),']')" />
+								$faces,concat('[',$elname,':')),']')" />
 						</when>
 						<otherwise>
-							<value-of select="local-name()" />
+							<value-of select="$elname" />
 						</otherwise>
 					</choose>
 				</with-param>
 				<!-- for named characters, look up overridden sex. For others, just default to male -->
 				<with-param name="sex">
 					<choose>
-						<when test="string-length(local-name()) = 1">
+						<when test="string-length($elname) = 1">
 							<value-of select="substring-before(substring-after(
-								$sexes,concat('[',local-name(),':')),']')" />
+								$sexes,concat('[',$elname,':')),']')" />
 						</when>
 						<otherwise>
 							<value-of select="'m'" />
@@ -115,27 +122,33 @@
 		
 	</template>
 
-	<!-- Renders a character presence -->	
+	<!-- Renders and individual character presence -->
 	<template name="character">
 		<param name="x" />
 		<param name="y" />
 		<param name="width" />
 		<param name="height" />
-		<param name="lines" />
+		<param name="linenodes" />
+		<param name="totallines" />
 		<param name="face" />
-		<param name="sex" />
-		
-		<svg:rect x="{$x+5}" y="{$y+5}" width="{$width - 10}" height="{$height - 10}" 
-				stroke="red" fill="none" stroke-dasharray="8,8" />
-		
-		<svg:text x="{$x}" y="{$y +20}" font-size="8px"><value-of select="concat('x: ',$x)" /></svg:text>
-		<svg:text x="{$x}" y="{$y +40}" font-size="8px"><value-of select="concat('y: ',$y)" /></svg:text>
-		<svg:text x="{$x}" y="{$y +60}" font-size="8px"><value-of select="concat('width: ',$width)" /></svg:text>
-		<svg:text x="{$x}" y="{$y +80}" font-size="8px"><value-of select="concat('height: ',$height)" /></svg:text>
-		<svg:text x="{$x}" y="{$y+100}" font-size="8px"><value-of select="concat('lines: ',$lines)" /></svg:text>
-		<svg:text x="{$x}" y="{$y+120}" font-size="8px"><value-of select="concat('face: ',$face)" /></svg:text>
-		<svg:text x="{$x}" y="{$y+140}" font-size="8px"><value-of select="concat('sex: ',$sex)" /></svg:text>
-		
+		<param name="sex" />		
+		<choose>
+			<otherwise>
+				<svg:image x="{$x}" y="{$y + $height div 2}" width="{$width}" height="{$height div 2}" 
+					xlink:href="images/{$face}.png"/>
+				<for-each select="$linenodes">
+					<variable name="linepos" select="count(./preceding-sibling::*[
+							namespace-uri()=$NAMESPACE and local-name()!='narration' 
+							and ./descendant::text()])" />
+					<call-template name="dialogue-text">
+						<with-param name="x" select="$x + $width div 2" />
+						<with-param name="y" select="$y + 20 + ($height div 2) div $totallines * $linepos" />
+						<with-param name="width" select="$width" />
+						<with-param name="text" select="string(.)" />
+					</call-template>
+				</for-each>
+			</otherwise>
+		</choose>
 	</template>
 	
 	<!-- Prepares character face data for the given named character elements by
@@ -226,12 +239,12 @@
 		<param name="y" />
 		<param name="width" />
 		<param name="text" />
-		<!--<svg:text y="{ $y }" font-size="18px" font-family="courier new,courier,monospace" 
-				fill="white" text-anchor="middle" stroke="white" stroke-width="6">
+		<!--<svg:text y="{ $y }" font-size="16px" font-family="courier new,courier,monospace" 
+				fill="white" text-anchor="middle" stroke="white" stroke-width="8">
 			<call-template name="wrap-text">
 				<with-param name="x" select="$x" />
-				<with-param name="lineheight" select="20" />
-				<with-param name="chars" select="round($width div 12)" />
+				<with-param name="lineheight" select="18" />
+				<with-param name="chars" select="round($width div 11)" />
 				<with-param name="text" select="normalize-space($text)"/>
 			</call-template>
 		</svg:text>-->

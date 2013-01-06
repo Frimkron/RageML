@@ -9,14 +9,14 @@
 		<b sex="f" label="le waitress"><derp>This sure is a lot of text</derp></b>
 		<a><trollface>why hello</trollface></a>
 		<c><derp>Fancy meeting you fine gents</derp></c>
-		<d><trollface>Yup</trollface></d>
+		<d><trollface /></d>
 		<derp>blah blah</derp>
 		<b-reply>Hi</b-reply>
 		<narration>Alas, it came to be</narration>
 	</panel>
 	<panel>
 		<narration>But:</narration>
-		<b><trollface /></b>
+		<b><trollface>Testing 1, 2, 3</trollface></b>
 		<d sex="f" />
 		<derp>It is with great pleasure I introduce to you blah blah blah!</derp>
 	</panel>
@@ -24,4 +24,17 @@
 		<trollface>Well this is a story all about how my life got switched turned </trollface>
 		<trollface>updside down so something something sit right there, I'll tell</trollface>
 	</panel>	
+	<panel>
+		<b><derp>Knock knock!</derp></b>
+		<a><trollface>Who's there?</trollface></a>
+		<!--<c><derp /></c>-->
+		<b-reply>Doctor</b-reply>
+		<a-reply>Doctor Who?</a-reply>
+		<b-reply>*snicker snicker*</b-reply>
+		<rage />
+		<challenge-accepted />
+	</panel>
+	<panel>
+		<forever-alone />
+	</panel>
 </comic>
