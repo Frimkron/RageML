@@ -526,3 +526,36 @@ previous siblings which aren't `<narration>` nodes. Simple.
 
 Next challenge, a face with no text *may* imply some text. For example,
 `<rage />` implies the dialogue "FFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
+
+- - - - - - - - 
+
+	|- - - - - - - | 
+	|  +--------+  | 
+	|  |        |  | 
+	|  |        |  | 
+	|  |        |  | |- - - - - |
+	|  +--------+  | |  +----+  |
+	+--------------+ |  |    |  |
+	                 |  +----+  |
+	                 +----------+
+
+- - - - - - - - - - 
+
+	      ( start )
+              |
+              v        
+	     [ new line ]<-----------------<-----------------+
+	          |                                          |
+	          v                                          |
+    +-->< more tokens? >-->[ output ]-->( end )          |
+	|         | y                                        ^
+	|         v                                          |
+	|   [ next token ]                                   |
+	|         |                                          |
+	|         v       n                  n               |
+	^   < token fits? >--->< new line? >--->[ output ]---+
+	|         | y                | y
+	|         v                  v
+	|      [ add ]<-------[ split token ]
+    |         |	
+	+---<-----+

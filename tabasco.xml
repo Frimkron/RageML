@@ -16,7 +16,7 @@
 	</panel>
 	<panel>
 		<narration>But:</narration>
-		<b><trollface>Testing 1, 2, 3</trollface></b>
+		<b><trollface>WWWWWWWWWWWWWWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</trollface></b>
 		<d sex="f" />
 		<derp>It is with great pleasure I introduce to you blah blah blah!</derp>
 	</panel>
@@ -31,10 +31,13 @@
 		<b-reply>Doctor</b-reply>
 		<a-reply>Doctor Who?</a-reply>
 		<b-reply>*snicker snicker*</b-reply>
-		<rage />
+		<rage></rage>
 		<challenge-accepted />
 	</panel>
 	<panel>
-		<forever-alone />
+		<rage/>
+	</panel>
+	<panel>
+		<challenge-accepted />
 	</panel>
 </comic>
