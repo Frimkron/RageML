@@ -5,7 +5,7 @@
 		xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:rg="http://markfrimston.co.uk/rageml">
 	
-	<!-- TODO: characters' dialogue lines -->
+	<!-- TODO: fix line node expression to handle <a /> -->
 
 	<output method="xml" version="1.0" encoding="utf-8"/>
 
@@ -41,9 +41,11 @@
 		<variable name="panelx" select="$BORDER_W + ($panelnum mod 2) * $PANEL_W" />
 		<variable name="panely" select="$BORDER_H + floor($panelnum div 2) * $PANEL_H" />
 		<!-- nodes representing lines of dialogue in this panel -->
-		<variable name="linenodes" select="$panelnode/*[namespace-uri()=$NAMESPACE 
-			and local-name()!='narration' and ( descendant::text()
-				or (not(contains($SILENTS,concat('[',local-name(),']'))) and not(descendant::silent)) )]" />
+		<!-- TODO - fix this -->
+		<variable name="linenodes" select="$panelnode/*[
+			namespace-uri()=$NAMESPACE and local-name()!='narration' and ( descendant::text()
+				or ( descendant::*[not(contains($SILENTS,concat('[',local-name(),']')))]
+					 and not(descendant::rg:silent) ) ) ]" />			
 		<!-- nodes representing character presences in this panel -->
 		<variable name="charnodes" select="$panelnode/*[namespace-uri()=$NAMESPACE
 			and local-name()!='narration' and substring(local-name(),2)!='-reply']" />	
@@ -155,61 +157,69 @@
 				* clip all text to its panel
 			-->
 			<when test="$face = 'challenge-accepted'">
-				<variable name="linepos" select="count($linenodes[1]/preceding-sibling::*[ namespace-uri()=$NAMESPACE 
-					and local-name()!='narration' and ( descendant::text() 
-						or (not(contains($SILENTS,concat('[',local-name(),']'))) and not(descendant::silent)) )])" />
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
 				<svg:image x="{$x + $width div 2 - $imgsize div 2}" y="{$y + $textheight}" 
 					width="{$imgsize}" height="{$imgsize}" xlink:href="images/{$face}.png" />
-				<svg:text font-family="impact,sans-serif" font-weight="bold" fill="black"
-						font-size="{24 * $textsize}px" 
-						y="{$y + 20 * $textsize + $textheight div $totallines * $linepos}"
-						text-anchor="middle">
-					<call-template name="wrap-text">
-						<with-param name="x" select="$x + $width div 2" />
-						<with-param name="chars" select="$width div (18 * $textsize)" />
-						<with-param name="lineheight" select="28 * $textsize" />
-						<with-param name="text">
-							<choose>
-								<when test="$linenodes[1]/descendant::text()">
-									<value-of select="$linenodes[1]/descendant::text()" />
-								</when>
-								<when test="$linenodes[1]/descendant::silent">
-								</when>
-								<otherwise>
-									<value-of select="'CHALLENGE ACCEPTED'" />
-								</otherwise>
-							</choose>
-						</with-param>
-					</call-template>
-				</svg:text>
+				<for-each select="$linenodes">
+					<variable name="linepos" select="count(preceding-sibling::*[ 
+						namespace-uri()=$NAMESPACE and local-name()!='narration' and ( descendant::text() 
+							or ( not(contains($SILENTS,concat('[',local-name(),']'))) 
+								 and not(contains($SILENTS,concat('[',local-name(*),']'))) 
+								 and not(descendant::rg:silent) ) ) ])" />
+					<svg:text font-family="impact,sans-serif" font-weight="bold" fill="black"
+							font-size="{24 * $textsize}px" 
+							y="{$y + 20 * $textsize + $textheight div $totallines * $linepos}"
+							text-anchor="middle">
+						<call-template name="wrap-text">
+							<with-param name="x" select="$x + $width div 2" />
+							<with-param name="chars" select="$width div (18 * $textsize)" />
+							<with-param name="lineheight" select="28 * $textsize" />
+							<with-param name="text">
+								<choose>
+									<when test="descendant::text()">
+										<value-of select="descendant::text()" />
+									</when>
+									<when test="descendant::rg:silent">
+									</when>
+									<otherwise>
+										<value-of select="'CHALLENGE ACCEPTED'" />
+									</otherwise>
+								</choose>
+							</with-param>
+						</call-template>
+					</svg:text>
+				</for-each>
 			</when>
 			<when test="$face = 'rage'">
-				<variable name="linepos" select="count($linenodes[1]/preceding-sibling::*[ namespace-uri()=$NAMESPACE 
-					and local-name()!='narration' and ( descendant::text() 
-						or (not(contains($SILENTS,concat('[',local-name(),']'))) and not(descendant::silent)) )])" />
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
-				<svg:text font-family="impact,sans-serif" font-weight="bold" fill="red" 
-						font-size="{30 * $textsize}px" 
-						y="{$y + 10 * $textsize + $textheight div $totallines * $linepos}">
-					<call-template name="wrap-text">
-						<with-param name="x" select="$x + 10 * $textsize" />
-						<with-param name="chars" select="$width div (26 * $textsize)" />
-						<with-param name="lineheight" select="30 * $textsize" />
-						<with-param name="text">
-							<choose>
-								<when test="$linenodes[1]/descendant::text()">
-									<value-of select="$linenodes[1]/descendant::text()" />
-								</when>
-								<when test="$linenodes[1]/descendant::silent">
-								</when>
-								<otherwise>						
-									<value-of select="'FFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU'" />
-								</otherwise>
-							</choose>
-						</with-param>
-					</call-template>
-				</svg:text>
+				<for-each select="$linenodes">
+					<variable name="linepos" select="count(preceding-sibling::*[ 
+						namespace-uri()=$NAMESPACE and local-name()!='narration' and ( descendant::text() 
+							or ( not(contains($SILENTS,concat('[',local-name(),']'))) 
+								 and not(contains($SILENTS,concat('[',local-name(*),']')))
+								 and not(descendant::rg:silent) ) ) ])" />
+					<svg:text font-family="impact,sans-serif" font-weight="bold" fill="red" 
+							font-size="{30 * $textsize}px" 
+							y="{$y + 10 * $textsize + $textheight div $totallines * $linepos}">
+						<call-template name="wrap-text">
+							<with-param name="x" select="$x + 10 * $textsize" />
+							<with-param name="chars" select="$width div (26 * $textsize)" />
+							<with-param name="lineheight" select="30 * $textsize" />
+							<with-param name="text">
+								<choose>
+									<when test="descendant::text()">
+										<value-of select="descendant::text()" />
+									</when>
+									<when test="descendant::rg:silent">
+									</when>
+									<otherwise>						
+										<value-of select="'FFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU'" />
+									</otherwise>
+								</choose>
+							</with-param>
+						</call-template>
+					</svg:text>
+				</for-each>
 				<svg:image x="{$x}" y="{$y + $textheight}" width="{$imgsize}" 
 					height="{$imgsize}" xlink:href="images/{$face}.png"/>
 			</when>
@@ -217,9 +227,11 @@
 				<svg:image x="{$x + $width div 2 - $imgsize div 2}" y="{$y + $textheight}" width="{$imgsize}" height="{$imgsize}" 
 					xlink:href="images/{$face}.png" />
 				<for-each select="$linenodes">
-					<variable name="linepos" select="count(preceding-sibling::*[ namespace-uri()=$NAMESPACE 
-						and local-name()!='narration' and ( descendant::text() 
-								or (not(contains($SILENTS,concat('[',local-name(),']'))) and not(descendant::silent)) )])" />
+					<variable name="linepos" select="count(preceding-sibling::*[ 
+						namespace-uri()=$NAMESPACE and local-name()!='narration' and ( descendant::text() 
+								or ( not(contains($SILENTS,concat('[',local-name(),']'))) 
+									 and not(contains($SILENTS,concat('[',local-name(*),']')))
+								     and not(descendant::rg:silent) ) ) ])" />
 					<call-template name="dialogue-text">
 						<with-param name="x" select="$x + $width div 2" />
 						<with-param name="y" select="$y + 20 + $textheight div $totallines * $linepos" />

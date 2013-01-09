@@ -53,6 +53,8 @@
 	<element name="rage" type="rg:attr-token" />
 	<element name="challenge-accepted" type="rg:attr-token" />
 
+	<!-- TODO -->
+	<elementt name="silent" type="token" />
 	
 	<!-- ====================================================== -->
 

@@ -35,9 +35,9 @@
 		<challenge-accepted />
 	</panel>
 	<panel>
-		<rage/>
-	</panel>
-	<panel>
-		<challenge-accepted />
+		<a><rage>Knock knock</rage></a>
+		<b><challenge-accepted>Who's there?</challenge-accepted></b>
+		<a-reply>Doctor</a-reply>
+		<b-reply><silent/></b-reply>
 	</panel>
 </comic>

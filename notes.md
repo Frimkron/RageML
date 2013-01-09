@@ -559,3 +559,36 @@ Next challenge, a face with no text *may* imply some text. For example,
 	|      [ add ]<-------[ split token ]
     |         |	
 	+---<-----+
+
+- - - - - - - - - - - -
+
+Is it a dialogue line?
+
+	                         silent
+	      reply?  wrapped?    face?   text?  silent?
+	      
+	   +---  y  +--- n  +---   n  +---  y  +--- n  O
+	   |                          '---  n  +--- n    X
+	   '---  n  +--- y  +---   y  +---  y  +--- n  O
+	            |       |         '---  n  +--- y    X
+	            |       |                  `--- n    X
+	            |       '---   n  +---  y  +--- n  O
+	            |                 '---  n  +--- y    X
+	            |                          `--- n  O
+	            '--- n  +---   y  +---  y  +--- n  O
+	                    |         '---  n  +--- y    X
+	                    |                  `--- n    X
+	                    '---   n  +---  y  +--- n  O
+	                              '---  n  +--- y    X
+	                                       `--- n  O
+	                                       
+	namespace-uri()=$NAMESPACE
+	and local-name != 'narration'
+	and (
+		descendant::text()
+		or (
+			not( contains($SILENTS,concat('[',local-name(),']')) )
+			not( contains($SILENTS,concat('[',local-name(*),']')) )
+			and not( descendant::rg:silent )
+		)
+	)
