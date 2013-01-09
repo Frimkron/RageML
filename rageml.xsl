@@ -5,8 +5,6 @@
 		xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:rg="http://markfrimston.co.uk/rageml">
 	
-	<!-- TODO: fix line node expression to handle <a /> -->
-
 	<output method="xml" version="1.0" encoding="utf-8"/>
 
 	<variable name="PANEL_W" select="350" /> <!-- Width of each panel -->
@@ -14,7 +12,7 @@
 	<variable name="BORDER_W" select="20" /> <!-- Width of space around image -->
 	<variable name="BORDER_H" select="20" /> <!-- Height of space around image -->
 	<variable name="NAMESPACE" select="'http://markfrimston.co.uk/rageml'" /> <!-- Namespace URI -->
-	<variable name="SILENTS" select="'[derp][trollface]'" /> <!-- Face types with no implied dialogue -->
+	<variable name="NONSILENTS" select="'[rage][challenge-accepted]'" /> <!-- Face types with implied dialogue -->
 	
 	<!-- Root template -->
 	<template match="/">
@@ -41,10 +39,9 @@
 		<variable name="panelx" select="$BORDER_W + ($panelnum mod 2) * $PANEL_W" />
 		<variable name="panely" select="$BORDER_H + floor($panelnum div 2) * $PANEL_H" />
 		<!-- nodes representing lines of dialogue in this panel -->
-		<!-- TODO - fix this -->
 		<variable name="linenodes" select="$panelnode/*[
 			namespace-uri()=$NAMESPACE and local-name()!='narration' and ( descendant::text()
-				or ( descendant::*[not(contains($SILENTS,concat('[',local-name(),']')))]
+				or ( descendant-or-self::*[contains($NONSILENTS,concat('[',local-name(),']'))]
 					 and not(descendant::rg:silent) ) ) ]" />			
 		<!-- nodes representing character presences in this panel -->
 		<variable name="charnodes" select="$panelnode/*[namespace-uri()=$NAMESPACE
@@ -72,47 +69,58 @@
 				width="{ $PANEL_W }" height="{ $PANEL_H }" stroke="black" 
 				stroke-width="3" fill="white" fill-opacity="0.75" />
 				
-		<!-- iterate over character presences, named characters first, in name order
-			i.e. the order of their visual positioning -->
-		<for-each select="$charnodes">
-			<sort select="concat(string(number(string-length(local-name()) &gt; 1)),local-name())" />
-			<variable name="elname" select="local-name()" />
-			<call-template name="character">
-				<!-- placed in panel according to position in ordered set. Give each character 
-					a vertical slice of the panel space -->
-				<with-param name="x" select="$panelx + $PANEL_W div count($charnodes) * (position() - 1)" />
-				<with-param name="y" select="$panely" />
-				<with-param name="width" select="$PANEL_W div count($charnodes)" />
-				<with-param name="height" select="$PANEL_H" />
-				<!-- direct children of panel representing dialogue lines for character -->
-				<with-param name="linenodes" select=". | $linenodes[local-name()=concat($elname,'-reply')]" />
-				<with-param name="totallines" select="count($linenodes)" />
-				<!-- for named characters, look up overidden face. For others, just use face name -->
-				<with-param name="face">
-					<choose>
-						<when test="string-length($elname) = 1">
-							<value-of select="substring-before(substring-after(
-								$faces,concat('[',$elname,':')),']')" />
-						</when>
-						<otherwise>
-							<value-of select="$elname" />
-						</otherwise>
-					</choose>
-				</with-param>
-				<!-- for named characters, look up overridden sex. For others, just default to male -->
-				<with-param name="sex">
-					<choose>
-						<when test="string-length($elname) = 1">
-							<value-of select="substring-before(substring-after(
-								$sexes,concat('[',$elname,':')),']')" />
-						</when>
-						<otherwise>
-							<value-of select="'m'" />
-						</otherwise>
-					</choose>
-				</with-param>
-			</call-template>
-		</for-each>
+		<!-- clip path -->
+		<svg:clipPath id="panel{$panelnum}clip">
+			<svg:rect x="{$panelx}" y="{$panely}" width="{$PANEL_W}" height="{$PANEL_H}" />
+		</svg:clipPath>
+				
+		<!-- group to clip panel contents -->
+		<svg:g clip-path="url(#panel{$panelnum}clip)">
+				
+			<!-- iterate over character presences, named characters first, in name order
+				i.e. the order of their visual positioning -->
+			<for-each select="$charnodes">
+				<sort select="concat(string(number(string-length(local-name()) &gt; 1)),local-name())" />
+				<variable name="elname" select="local-name()" />
+				<call-template name="character">
+					<!-- placed in panel according to position in ordered set. Give each character 
+						a vertical slice of the panel space -->
+					<with-param name="x" select="$panelx + $PANEL_W div count($charnodes) * (position() - 1)" />
+					<with-param name="y" select="$panely" />
+					<with-param name="width" select="$PANEL_W div count($charnodes)" />
+					<with-param name="height" select="$PANEL_H" />
+					<!-- direct children of panel representing dialogue lines for character -->
+					<with-param name="linenodes" select=". | $linenodes[local-name()=concat($elname,'-reply')]" />
+					<with-param name="totallines" select="count($linenodes)" />
+					<with-param name="alllinenodes" select="$linenodes" />
+					<!-- for named characters, look up overidden face. For others, just use face name -->
+					<with-param name="face">
+						<choose>
+							<when test="string-length($elname) = 1">
+								<value-of select="substring-before(substring-after(
+									$faces,concat('[',$elname,':')),']')" />
+							</when>
+							<otherwise>
+								<value-of select="$elname" />
+							</otherwise>
+						</choose>
+					</with-param>
+					<!-- for named characters, look up overridden sex. For others, just default to male -->
+					<with-param name="sex">
+						<choose>
+							<when test="string-length($elname) = 1">
+								<value-of select="substring-before(substring-after(
+									$sexes,concat('[',$elname,':')),']')" />
+							</when>
+							<otherwise>
+								<value-of select="'m'" />
+							</otherwise>
+						</choose>
+					</with-param>
+				</call-template>
+			</for-each>
+			
+		</svg:g>
 		
 		<!-- recurse to the next panel, if present -->
 		<if test="$panelnode/following-sibling::rg:panel">
@@ -127,13 +135,14 @@
 		
 	</template>
 
-	<!-- Renders and individual character presence -->
+	<!-- Renders an individual character presence -->
 	<template name="character">
 		<param name="x" />
 		<param name="y" />
 		<param name="width" />
 		<param name="height" />
 		<param name="linenodes" />
+		<param name="alllinenodes" />
 		<param name="totallines" />
 		<param name="face" />
 		<param name="sex" />		
@@ -153,8 +162,6 @@
 		<choose>
 			<!-- WIP:
 				* make <silent /> valid in xsd
-				* text positioning for special faces
-				* clip all text to its panel
 			-->
 			<when test="$face = 'challenge-accepted'">
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
@@ -162,10 +169,7 @@
 					width="{$imgsize}" height="{$imgsize}" xlink:href="images/{$face}.png" />
 				<for-each select="$linenodes">
 					<variable name="linepos" select="count(preceding-sibling::*[ 
-						namespace-uri()=$NAMESPACE and local-name()!='narration' and ( descendant::text() 
-							or ( not(contains($SILENTS,concat('[',local-name(),']'))) 
-								 and not(contains($SILENTS,concat('[',local-name(*),']'))) 
-								 and not(descendant::rg:silent) ) ) ])" />
+						count($alllinenodes|.) = count($alllinenodes) ] )" />
 					<svg:text font-family="impact,sans-serif" font-weight="bold" fill="black"
 							font-size="{24 * $textsize}px" 
 							y="{$y + 20 * $textsize + $textheight div $totallines * $linepos}"
@@ -194,10 +198,7 @@
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
 				<for-each select="$linenodes">
 					<variable name="linepos" select="count(preceding-sibling::*[ 
-						namespace-uri()=$NAMESPACE and local-name()!='narration' and ( descendant::text() 
-							or ( not(contains($SILENTS,concat('[',local-name(),']'))) 
-								 and not(contains($SILENTS,concat('[',local-name(*),']')))
-								 and not(descendant::rg:silent) ) ) ])" />
+							count($alllinenodes|.) = count($alllinenodes) ])" />
 					<svg:text font-family="impact,sans-serif" font-weight="bold" fill="red" 
 							font-size="{30 * $textsize}px" 
 							y="{$y + 10 * $textsize + $textheight div $totallines * $linepos}">
@@ -228,10 +229,7 @@
 					xlink:href="images/{$face}.png" />
 				<for-each select="$linenodes">
 					<variable name="linepos" select="count(preceding-sibling::*[ 
-						namespace-uri()=$NAMESPACE and local-name()!='narration' and ( descendant::text() 
-								or ( not(contains($SILENTS,concat('[',local-name(),']'))) 
-									 and not(contains($SILENTS,concat('[',local-name(*),']')))
-								     and not(descendant::rg:silent) ) ) ])" />
+							count($alllinenodes|.) = count($alllinenodes) ])" />
 					<call-template name="dialogue-text">
 						<with-param name="x" select="$x + $width div 2" />
 						<with-param name="y" select="$y + 20 + $textheight div $totallines * $linepos" />

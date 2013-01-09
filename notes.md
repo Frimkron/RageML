@@ -592,3 +592,19 @@ Is it a dialogue line?
 			and not( descendant::rg:silent )
 		)
 	)
+
+	Better:
+	
+	namespace-uri()=$NAMESPACE
+	and local-name() != 'narration'
+	and (
+		descendant::text()
+		or (
+			desendant-or-self::*[contains($NONSILENTS,concat('[',local-name(),']'))]
+			and not( descendant::rg:silent )
+		)
+	)
+
+	Later tests:
+	
+	preceding-sibling::*[ count($alllinenodes|.) = count($alllinenodes) ].
