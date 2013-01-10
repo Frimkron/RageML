@@ -11,8 +11,9 @@
 	<variable name="PANEL_H" select="330" /> <!-- Height of each panel -->
 	<variable name="BORDER_W" select="20" /> <!-- Width of space around image -->
 	<variable name="BORDER_H" select="20" /> <!-- Height of space around image -->
+	<variable name="NARRATION_H" select="50" />
 	<variable name="NAMESPACE" select="'http://markfrimston.co.uk/rageml'" /> <!-- Namespace URI -->
-	<variable name="NONSILENTS" select="'[rage][challenge-accepted]'" /> <!-- Face types with implied dialogue -->
+	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted]'" /> <!-- Face types with implied dialogue -->
 	
 	<!-- Root template -->
 	<template match="/">
@@ -21,8 +22,7 @@
 			<call-template name="panels">
 				<with-param name="panelnode" select="rg:comic/rg:panel[1]" />
 			</call-template>
-		</svg:svg>
-		
+		</svg:svg>		
 	</template>
 
 	<!-- Renders panels recursively -->	
@@ -41,12 +41,11 @@
 		<!-- nodes representing lines of dialogue in this panel -->
 		<variable name="linenodes" select="$panelnode/*[
 			namespace-uri()=$NAMESPACE and local-name()!='narration' and ( descendant::text()
-				or ( descendant-or-self::*[contains($NONSILENTS,concat('[',local-name(),']'))]
+				or ( descendant-or-self::*[contains($WITH_DEF_TEXT,concat('[',local-name(),']'))]
 					 and not(descendant::rg:silent) ) ) ]" />			
 		<!-- nodes representing character presences in this panel -->
 		<variable name="charnodes" select="$panelnode/*[namespace-uri()=$NAMESPACE
-			and local-name()!='narration' and substring(local-name(),2)!='-reply']" />	
-		
+			and local-name()!='narration' and substring(local-name(),2)!='-reply']" />			
 		<!-- current states of characters' faces after being overridden -->
 		<variable name="faces">
 			<call-template name="make-faces">
@@ -63,6 +62,13 @@
 				<with-param name="def-sexes" select="$def-sexes" />
 			</call-template>
 		</variable>
+		<variable name="topnarration" select="$panelnode/rg:narration[not(preceding-sibling::*)]" />
+		<variable name="bottomnarration" select="$panelnode/rg:narration[preceding-sibling::*
+				and not(following-sibling::*)]" />
+		<!-- position and size of main panel content area, between narration blocks -->
+		<variable name="contenty" select="$panely + number(boolean($topnarration)) * $NARRATION_H" /> 
+		<variable name="contenth" select="$PANEL_H - ((number(boolean($topnarration))
+				+ number(boolean($bottomnarration))) * $NARRATION_H)" />
 
 		<!-- panel border -->
 		<svg:rect x="{ $panelx }" y="{ $panely }" 
@@ -77,6 +83,16 @@
 		<!-- group to clip panel contents -->
 		<svg:g clip-path="url(#panel{$panelnum}clip)">
 				
+			<!-- top narration text -->
+			<if test="$topnarration">
+				<call-template name="narration-text">
+					<with-param name="x" select="$panelx + 10" />
+					<with-param name="y" select="$panely + 10" />
+					<with-param name="width" select="$PANEL_W" />
+					<with-param name="text" select="string($topnarration)" />
+				</call-template>
+			</if>
+				
 			<!-- iterate over character presences, named characters first, in name order
 				i.e. the order of their visual positioning -->
 			<for-each select="$charnodes">
@@ -86,9 +102,9 @@
 					<!-- placed in panel according to position in ordered set. Give each character 
 						a vertical slice of the panel space -->
 					<with-param name="x" select="$panelx + $PANEL_W div count($charnodes) * (position() - 1)" />
-					<with-param name="y" select="$panely" />
+					<with-param name="y" select="$contenty" />
 					<with-param name="width" select="$PANEL_W div count($charnodes)" />
-					<with-param name="height" select="$PANEL_H" />
+					<with-param name="height" select="$contenth" />
 					<!-- direct children of panel representing dialogue lines for character -->
 					<with-param name="linenodes" select=". | $linenodes[local-name()=concat($elname,'-reply')]" />
 					<with-param name="totallines" select="count($linenodes)" />
@@ -119,6 +135,16 @@
 					</with-param>
 				</call-template>
 			</for-each>
+			
+			<!-- top narration text -->
+			<if test="$bottomnarration">
+				<call-template name="narration-text">
+					<with-param name="x" select="$panelx + 10" />
+					<with-param name="y" select="$contenty + $contenth + 10" />
+					<with-param name="width" select="$PANEL_W" />
+					<with-param name="text" select="string($bottomnarration)" />
+				</call-template>
+			</if>
 			
 		</svg:g>
 		
@@ -160,9 +186,6 @@
 		<variable name="textheight" select="$height - $imgsize" />
 
 		<choose>
-			<!-- WIP:
-				* make <silent /> valid in xsd
-			-->
 			<when test="$face = 'challenge-accepted'">
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
 				<svg:image x="{$x + $width div 2 - $imgsize div 2}" y="{$y + $textheight}" 
@@ -241,38 +264,7 @@
 		</choose>
 	</template>
 
-	<!--<template match="rage">
-		<variable name="panelnum" select="count(ancestor::panel/preceding-sibling::*)" />
-		<variable name="panelx" select="($panelnum mod 2) * $PANEL_W + $BORDER_W" />
-		<variable name="panely" select="floor($panelnum div 2) * $PANEL_H + $BORDER_H" />
-		<variable name="content">
-			<choose>
-				<when test="text()"><value-of select="text()" /></when>
-				<otherwise><value-of select="'FFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU'" /></otherwise>
-			</choose>
-		</variable>
-		<variable name="pathid" select="generate-id(.)" />
-		<svg:image x="{ $panelx }" y="{ $panely + $PANEL_H * 0.25 }"
-				width="{ $PANEL_W * 0.75 }" height="{ $PANEL_H * 0.75 }"
-				xlink:href="images/rage.png" />
-		<svg:path d="M{$panelx+10},{$panely+30} L{$panelx+$PANEL_W -10},{$panely+30} 
-					M{$panelx+10},{$panely+60} L{$panelx+$PANEL_W -10},{$panely+60}  
-					M{$panelx+10},{$panely+90}  L{$panelx+$PANEL_W -10},{$panely+90}
-					M{$panelx+$PANEL_W*0.75},{$panely+120} L{$panelx+$PANEL_W -10},{$panely+120}
-					M{$panelx+$PANEL_W*0.75},{$panely+150} L{$panelx+$PANEL_W -10},{$panely+150}
-					M{$panelx+$PANEL_W*0.75},{$panely+180} L{$panelx+$PANEL_W -10},{$panely+180}
-					M{$panelx+$PANEL_W*0.75},{$panely+210} L{$panelx+$PANEL_W -10},{$panely+210}
-					M{$panelx+$PANEL_W*0.75},{$panely+240} L{$panelx+$PANEL_W -10},{$panely+240}
-					M{$panelx+$PANEL_W*0.75},{$panely+270} L{$panelx+$PANEL_W -10},{$panely+270}
-					M{$panelx+$PANEL_W*0.75},{$panely+300} L{$panelx+$PANEL_W -10},{$panely+300}"
-				stroke="none" fill="none" id="{$pathid}" />
-		<svg:text font-family="impact,sans-serif" font-weight="bold" fill="red" font-size="20pt">
-			<svg:textPath xlink:href="#{$pathid}">
-				<value-of select="$content" />
-			</svg:textPath>
-		</svg:text>
-	</template>-->
-	
+
 	<!-- Prepares character face data for the given named character elements by
 		overriding the given defaults with any face change specified in the 
 		character nodes -->
@@ -352,6 +344,24 @@
 				<value-of select="$sexes" />
 			</otherwise>	
 		</choose>
+	</template>
+	
+	<!-- Renders the given text as narration text, attempting to wrap to the 
+		given width -->
+	<template name="narration-text">
+		<param name="x" />
+		<param name="y" />
+		<param name="width" />
+		<param name="text" />
+		<svg:text y="{$y}" font-size="16px" font-family="courier new,courier,monospace"
+				fill="black" text-anchor="left" stroke="none">
+			<call-template name="wrap-text">
+				<with-param name="x" select="$x" />
+				<with-param name="lineheight" select="18" />
+				<with-param name="chars" select="round($width div 11)" />
+				<with-param name="text" select="normalize-space($text)" />
+			</call-template>
+		</svg:text>
 	</template>
 	
 	<!-- Renders the given text as character dialogue, attempting to wrap to

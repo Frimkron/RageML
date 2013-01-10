@@ -39,5 +39,6 @@
 		<b><challenge-accepted>Who's there?</challenge-accepted></b>
 		<a-reply>Doctor</a-reply>
 		<b-reply><silent/></b-reply>
+		<narration>Noddy, the little man with the red and yellow car.</narration>
 	</panel>
 </comic>
