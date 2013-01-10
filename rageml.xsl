@@ -13,7 +13,7 @@
 	<variable name="BORDER_H" select="20" /> <!-- Height of space around image -->
 	<variable name="NARRATION_H" select="50" />
 	<variable name="NAMESPACE" select="'http://markfrimston.co.uk/rageml'" /> <!-- Namespace URI -->
-	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted]'" /> <!-- Face types with implied dialogue -->
+	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted][lol]'" /> <!-- Face types with implied dialogue -->
 	
 	<!-- Root template -->
 	<template match="/">
@@ -89,6 +89,7 @@
 					<with-param name="x" select="$panelx + 10" />
 					<with-param name="y" select="$panely + 10" />
 					<with-param name="width" select="$PANEL_W" />
+					<with-param name="anchor" select="'start'" />
 					<with-param name="text" select="string($topnarration)" />
 				</call-template>
 			</if>
@@ -139,9 +140,10 @@
 			<!-- top narration text -->
 			<if test="$bottomnarration">
 				<call-template name="narration-text">
-					<with-param name="x" select="$panelx + 10" />
+					<with-param name="x" select="$panelx + $PANEL_W - 10" />
 					<with-param name="y" select="$contenty + $contenth + 10" />
 					<with-param name="width" select="$PANEL_W" />
+					<with-param name="anchor" select="'end'" />
 					<with-param name="text" select="string($bottomnarration)" />
 				</call-template>
 			</if>
@@ -186,6 +188,53 @@
 		<variable name="textheight" select="$height - $imgsize" />
 
 		<choose>
+			<when test="$face = 'lol'">
+				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
+				<svg:image x="{$x}" y="{$y + $textheight}" width="{$imgsize}" 
+						height="{$imgsize}" xlink:href="images/{$face}.png" />
+				<choose>
+					<when test="count($alllinenodes)=1 and count($linenodes)=1">
+						<svg:text font-family="impact,sans-serif" fill="red" font-weight="bold"
+								font-size="{48 * $textsize}px" text-anchor="end"
+								y="{$y + $textheight + $imgsize * 0.5}">
+							<call-template name="wrap-text">
+								<with-param name="x" select="$x + $width - 10 * $textsize" />
+								<with-param name="chars" select="$width div (35 * $textsize)" />
+								<with-param name="lineheight" select="50 * $textsize" />
+								<with-param name="text">
+									<choose>
+										<when test="descendant::text()"><value-of select="descendant::text()" /></when>
+										<when test="descendant::rg:silent"></when>
+										<otherwise><value-of select="'LOL'" /></otherwise>
+									</choose>
+								</with-param>
+							</call-template>
+						</svg:text>
+					</when>
+					<otherwise>
+						<for-each select="$linenodes">
+							<variable name="linepos" select="count(preceding-sibling::*[
+								count($alllinenodes|.) = count($alllinenodes) ] )" />
+							<svg:text font-family="impact,sans-serif" fill="red" font-weight="bold"
+									font-size="{48 * $textsize}px"  text-anchor="middle"
+									y="{$y + 20 * $textsize + $textheight div $totallines * $linepos}">
+								<call-template name="wrap-text">
+									<with-param name="x" select="$x + $width div 2" />
+									<with-param name="chars" select="$width div (35 * $textsize)" />
+									<with-param name="lineheight" select="50 * $textsize" />
+									<with-param name="text">
+										<choose>
+											<when test="descendant::text()"><value-of select="descendant::text()" /></when>
+											<when test="descendant::rg:silent"></when>
+											<otherwise><value-of select="'LOL'" /></otherwise>
+										</choose>
+									</with-param>
+								</call-template>
+							</svg:text>
+						</for-each>
+					</otherwise>
+				</choose>
+			</when>
 			<when test="$face = 'challenge-accepted'">
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
 				<svg:image x="{$x + $width div 2 - $imgsize div 2}" y="{$y + $textheight}" 
@@ -203,14 +252,9 @@
 							<with-param name="lineheight" select="28 * $textsize" />
 							<with-param name="text">
 								<choose>
-									<when test="descendant::text()">
-										<value-of select="descendant::text()" />
-									</when>
-									<when test="descendant::rg:silent">
-									</when>
-									<otherwise>
-										<value-of select="'CHALLENGE ACCEPTED'" />
-									</otherwise>
+									<when test="descendant::text()"><value-of select="descendant::text()" /></when>
+									<when test="descendant::rg:silent"></when>
+									<otherwise><value-of select="'CHALLENGE ACCEPTED'" /></otherwise>
 								</choose>
 							</with-param>
 						</call-template>
@@ -231,14 +275,9 @@
 							<with-param name="lineheight" select="30 * $textsize" />
 							<with-param name="text">
 								<choose>
-									<when test="descendant::text()">
-										<value-of select="descendant::text()" />
-									</when>
-									<when test="descendant::rg:silent">
-									</when>
-									<otherwise>						
-										<value-of select="'FFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU'" />
-									</otherwise>
+									<when test="descendant::text()"><value-of select="descendant::text()" /></when>
+									<when test="descendant::rg:silent"></when>
+									<otherwise><value-of select="'FFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU'" /></otherwise>
 								</choose>
 							</with-param>
 						</call-template>
@@ -352,9 +391,10 @@
 		<param name="x" />
 		<param name="y" />
 		<param name="width" />
+		<param name="anchor" />
 		<param name="text" />
 		<svg:text y="{$y}" font-size="16px" font-family="courier new,courier,monospace"
-				fill="black" text-anchor="left" stroke="none">
+				fill="black" text-anchor="{$anchor}" stroke="none">
 			<call-template name="wrap-text">
 				<with-param name="x" select="$x" />
 				<with-param name="lineheight" select="18" />

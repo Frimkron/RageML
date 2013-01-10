@@ -5,12 +5,15 @@
 		xmlns:x="http://example.com/x"
 		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
+		<lol />
+	</panel>
+	<panel>
 		<narration>Meanwhile, at the library</narration>
 		<b sex="f" label="le waitress"><derp>This sure is a lot of text</derp></b>
 		<a><trollface>why hello</trollface></a>
 		<c><derp>Fancy meeting you fine gents</derp></c>
 		<d><trollface /></d>
-		<derp>blah blah</derp>
+		<lol />
 		<b-reply>Hi</b-reply>
 		<narration>Alas, it came to be</narration>
 	</panel>
@@ -22,7 +25,7 @@
 	</panel>
 	<panel>
 		<trollface>Well this is a story all about how my life got switched turned </trollface>
-		<trollface>updside down so something something sit right there, I'll tell</trollface>
+		<lol>updside down so something something sit right there, I'll tell</lol>
 	</panel>	
 	<panel>
 		<b><derp>Knock knock!</derp></b>

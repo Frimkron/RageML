@@ -32,14 +32,12 @@ in an img tag.
 
 Feature TODO:
 
-* "who" attribute (identifying characters)
-* multiple dialog lines per panel
 * Labels
 * "sex" attribute
-* closeup panel
 * "to" attribute (basic direction override)
 * Grouped characters
 * appearence by number
+* closeup panel
 			
 Layouts
 	
@@ -608,3 +606,46 @@ Is it a dialogue line?
 	Later tests:
 	
 	preceding-sibling::*[ count($alllinenodes|.) = count($alllinenodes) ].
+
+So, how would modifiers like `<closeup>` work?
+
+	<panel>
+		<closeup>
+			<derp>lol</derp>
+		</closeup>
+	</panel>
+	
+Closeup affects the whole panel
+
+	<panel effect="closeup">
+		<derp>lol</derp>
+	</panel>
+	
+But you can only have a closeup of a single character
+
+	<closeup-panel>
+		<a><derp>lol</derp></a>
+	</closeup-panel>
+	
+This makes sense, but isn't aesthetically pleasing as nesting the closeup tag
+
+	<panel>
+		<!-- panel content can either be conversion OR single closeup -->
+		<closeup> 
+			<!-- closeup may only contain a single character line, either
+				wrapped or not -->
+			<derp>lol</derp> 
+		</closeup>
+	</panel>
+
+But what about narration?
+
+	<panel>
+		<narration>Then...</narration>
+		<closeup>
+			<derp>lol</derp>
+		</closeup>
+		<narration>The End</narration>
+	</panel>
+
+Forget closeups. I don't need the feature creep.
