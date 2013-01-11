@@ -11,9 +11,11 @@
 	<variable name="PANEL_H" select="330" /> <!-- Height of each panel -->
 	<variable name="BORDER_W" select="20" /> <!-- Width of space around image -->
 	<variable name="BORDER_H" select="20" /> <!-- Height of space around image -->
-	<variable name="NARRATION_H" select="50" />
+	<variable name="NARRATION_H" select="50" /> <!-- Height of each narration block -->
+	<variable name="LABEL_H" select="30" /> <!-- Height reserved for character labels -->
 	<variable name="NAMESPACE" select="'http://markfrimston.co.uk/rageml'" /> <!-- Namespace URI -->
 	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted][lol]'" /> <!-- Face types with implied dialogue -->
+	<variable name="HAIR_SCALE" select="1.25" />
 	
 	<!-- Root template -->
 	<template match="/">
@@ -110,6 +112,7 @@
 					<with-param name="linenodes" select=". | $linenodes[local-name()=concat($elname,'-reply')]" />
 					<with-param name="totallines" select="count($linenodes)" />
 					<with-param name="alllinenodes" select="$linenodes" />
+					<with-param name="label" select="@label" />
 					<!-- for named characters, look up overidden face. For others, just use face name -->
 					<with-param name="face">
 						<choose>
@@ -174,7 +177,9 @@
 		<param name="totallines" />
 		<param name="face" />
 		<param name="sex" />		
+		<param name="label" />
 
+		<!-- prepare sizes -->
 		<variable name="imgsize">
 			<choose>
 				<when test="$width &gt; $height * 0.75">
@@ -185,18 +190,32 @@
 				</otherwise>
 			</choose>
 		</variable>
-		<variable name="textheight" select="$height - $imgsize" />
+		<variable name="textheight" select="$height - $imgsize - $LABEL_H" />
 
 		<choose>
 			<when test="$face = 'lol'">
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
-				<svg:image x="{$x}" y="{$y + $textheight}" width="{$imgsize}" 
+				<if test="$sex = 'f'">
+					<svg:image x="{$x + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+						y="{$y + $textheight + $LABEL_H + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2 - $imgsize * 0.1}" 
+						width="{$imgsize * $HAIR_SCALE}" height="{$imgsize * $HAIR_SCALE}" 
+						xlink:href="images/hair-back.png" />
+				</if>
+				<svg:image x="{$x}" y="{$y + $textheight + $LABEL_H}" width="{$imgsize}" 
 						height="{$imgsize}" xlink:href="images/{$face}.png" />
+				<if test="$sex = 'f'">
+					<svg:image x="{$x + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+						y="{$y + $textheight + $LABEL_H + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2 - $imgsize * 0.1}" 
+						width="{$imgsize * $HAIR_SCALE}" height="{$imgsize * $HAIR_SCALE}" 
+						xlink:href="images/hair-front.png" />
+				</if>
 				<choose>
+					<!-- special case: if <lol> is on its own in panel, place text next to mouth
+							where it's typically positioned -->
 					<when test="count($alllinenodes)=1 and count($linenodes)=1">
 						<svg:text font-family="impact,sans-serif" fill="red" font-weight="bold"
 								font-size="{48 * $textsize}px" text-anchor="end"
-								y="{$y + $textheight + $imgsize * 0.5}">
+								y="{$y + $textheight + $LABEL_H + $imgsize * 0.5}">
 							<call-template name="wrap-text">
 								<with-param name="x" select="$x + $width - 10 * $textsize" />
 								<with-param name="chars" select="$width div (35 * $textsize)" />
@@ -211,6 +230,7 @@
 							</call-template>
 						</svg:text>
 					</when>
+					<!-- otherwise position text according to conversation sequence as normal -->
 					<otherwise>
 						<for-each select="$linenodes">
 							<variable name="linepos" select="count(preceding-sibling::*[
@@ -237,8 +257,21 @@
 			</when>
 			<when test="$face = 'challenge-accepted'">
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
-				<svg:image x="{$x + $width div 2 - $imgsize div 2}" y="{$y + $textheight}" 
+				<!-- scale down hair and move up a bit to fit to head better -->
+				<if test="$sex = 'f'">
+					<svg:image x="{$x + $width div 2 - ($imgsize * $HAIR_SCALE * 0.8) div 2}" 
+						y="{$y + $textheight + $LABEL_H + $imgsize * 0.33 - ($imgsize * $HAIR_SCALE * 0.8) div 2}" 
+						width="{$imgsize * $HAIR_SCALE * 0.8}" height="{$imgsize * $HAIR_SCALE * 0.8}" 
+						xlink:href="images/hair-back.png" />
+				</if>
+				<svg:image x="{$x + $width div 2 - $imgsize div 2}" y="{$y + $textheight + $LABEL_H}" 
 					width="{$imgsize}" height="{$imgsize}" xlink:href="images/{$face}.png" />
+				<if test="$sex = 'f'">
+					<svg:image x="{$x + $width div 2 - ($imgsize * $HAIR_SCALE * 0.8) div 2}" 
+						y="{$y + $textheight + $LABEL_H + $imgsize * 0.33 - ($imgsize * $HAIR_SCALE * 0.8) div 2}" 
+						width="{$imgsize * $HAIR_SCALE * 0.8}" height="{$imgsize * $HAIR_SCALE * 0.8}" 
+						xlink:href="images/hair-front.png" />
+				</if>
 				<for-each select="$linenodes">
 					<variable name="linepos" select="count(preceding-sibling::*[ 
 						count($alllinenodes|.) = count($alllinenodes) ] )" />
@@ -283,12 +316,40 @@
 						</call-template>
 					</svg:text>
 				</for-each>
-				<svg:image x="{$x}" y="{$y + $textheight}" width="{$imgsize}" 
+				<!-- render face on top of text, because it's probably a wall of letter Us -->
+				<if test="$sex = 'f'">
+					<svg:image x="{$x + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+							y="{$y + $textheight + $LABEL_H + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+							width="{$imgsize * $HAIR_SCALE}" height="{$imgsize * $HAIR_SCALE}" 
+							xlink:href="images/hair-back.png" />
+				</if>
+				<svg:image x="{$x}" y="{$y + $textheight + $LABEL_H}" width="{$imgsize}" 
 					height="{$imgsize}" xlink:href="images/{$face}.png"/>
+				<if test="$sex = 'f'">
+					<svg:image x="{$x + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+							y="{$y + $textheight + $LABEL_H + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+							width="{$imgsize * $HAIR_SCALE}" height="{$imgsize * $HAIR_SCALE}" 
+							xlink:href="images/hair-front.png" />
+				</if>
 			</when>
 			<otherwise>
-				<svg:image x="{$x + $width div 2 - $imgsize div 2}" y="{$y + $textheight}" width="{$imgsize}" height="{$imgsize}" 
+				<!-- hair back -->
+				<if test="$sex = 'f'">
+					<svg:image x="{$x + $width div 2 - ($imgsize * $HAIR_SCALE) div 2}"
+						y="{$y + $textheight + $LABEL_H + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+						width="{$imgsize * $HAIR_SCALE}" height="{$imgsize * $HAIR_SCALE}"
+						xlink:href="images/hair-back.png" />
+				</if>
+				<svg:image x="{$x + $width div 2 - $imgsize div 2}" 
+					y="{$y + $textheight + $LABEL_H}" width="{$imgsize}" height="{$imgsize}" 
 					xlink:href="images/{$face}.png" />
+				<!-- hair front -->
+				<if test="$sex = 'f'">
+					<svg:image x="{$x + $width div 2 - ($imgsize * $HAIR_SCALE) div 2}"
+						y="{$y + $textheight + $LABEL_H + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+						width="{$imgsize * $HAIR_SCALE}" height="{$imgsize * $HAIR_SCALE}"
+						xlink:href="images/hair-front.png" />
+				</if>
 				<for-each select="$linenodes">
 					<variable name="linepos" select="count(preceding-sibling::*[ 
 							count($alllinenodes|.) = count($alllinenodes) ])" />
@@ -301,6 +362,17 @@
 				</for-each>
 			</otherwise>
 		</choose>
+		
+		<!-- render label -->
+		<if test="$label">
+			<call-template name="dialogue-text">
+				<with-param name="x" select="$x + $width div 2" />
+				<with-param name="y" select="$y + $textheight" />
+				<with-param name="width" select="$width" />
+				<with-param name="text" select="concat('* ',$label)" />
+			</call-template>
+		</if>
+		
 	</template>
 
 

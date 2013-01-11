@@ -32,7 +32,6 @@ in an img tag.
 
 Feature TODO:
 
-* Labels
 * "sex" attribute
 * "to" attribute (basic direction override)
 * Grouped characters
@@ -649,3 +648,5 @@ But what about narration?
 	</panel>
 
 Forget closeups. I don't need the feature creep.
+
+

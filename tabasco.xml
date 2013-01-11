@@ -5,7 +5,20 @@
 		xmlns:x="http://example.com/x"
 		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
-		<lol />
+		<e label="le best friend" sex="f">
+			<derp>I think McCulcan's performance was more refined in the 
+				second film and, well, that paint can on a string never
+				gets old</derp>
+		</e>
+		<c label="le me">
+			<derp>Hi, how are you doing?</derp>
+		</c>
+		<b label="le gardener and marriage counsellor">
+			<trollface>Yes I quite agree.</trollface>
+		</b>
+	</panel>
+	<panel>
+		<e label="le vocational guidance councillor"><lol /></e>
 	</panel>
 	<panel>
 		<narration>Meanwhile, at the library</narration>
@@ -13,7 +26,7 @@
 		<a><trollface>why hello</trollface></a>
 		<c><derp>Fancy meeting you fine gents</derp></c>
 		<d><trollface /></d>
-		<lol />
+		<e sex="f"><lol /></e>
 		<b-reply>Hi</b-reply>
 		<narration>Alas, it came to be</narration>
 	</panel>
@@ -31,15 +44,15 @@
 		<b><derp>Knock knock!</derp></b>
 		<a><trollface>Who's there?</trollface></a>
 		<!--<c><derp /></c>-->
+		<d sex="f"><rage></rage></d>
 		<b-reply>Doctor</b-reply>
 		<a-reply>Doctor Who?</a-reply>
 		<b-reply>*snicker snicker*</b-reply>
-		<rage></rage>
-		<challenge-accepted />
+		<e sex="m"><challenge-accepted /></e>
 	</panel>
 	<panel>
 		<a><rage>Knock knock</rage></a>
-		<b><challenge-accepted>Who's there?</challenge-accepted></b>
+		<b sex="f"><challenge-accepted>Who's there?</challenge-accepted></b>
 		<a-reply>Doctor</a-reply>
 		<b-reply><silent/></b-reply>
 		<narration>Noddy, the little man with the red and yellow car.</narration>
