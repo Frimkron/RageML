@@ -32,16 +32,89 @@ in an img tag.
 
 Feature TODO:
 
-* "sex" attribute
 * "to" attribute (basic direction override)
 * Grouped characters
 * appearence by number
 * closeup panel
+
+Face list, priority order:
+
+* ~~me gusta~~
+* forever alone
+* poker face
+* okay
+* y u no
+* thinking
+* harp darp
+* better than expected
+* suspicious
+* FFFFFFF- black bg
+* catface
+* tears of joy
+* determined guy
+* fucking serious
+* spongebob time cards
+* ¬_¬ / dude come on
+* fuck yea
+* T_T / numb face (horror, fear, loathing)
+* picard / facepalm
+* you don't say / nicolas cage
+* mercury air punch
+* not bad / obama
+* long neck
+* seriously? suit guy / are you serious
+* feels good man / sweet jesus
+* bitch please / yao ming
+* chan mind blow / my brain is full of fuck
+* pffftttccchhhhppfffchhh
+* mother of god
+* GASP black bg / omg
+* true story
+* eating cereal
+* :|
+* :p
+* bad poker face
+* neil degrasse tyson / watch out guys we're dealing with a badass over here
+* aww yeah guy
+* oh stop it you
+* What's all this racket / mirada fija
+* bean / if you know what I mean
+* joy
+* feel like a sir
+* oh god why
+* close enough
+* pondering at computer
+* all the things
+* annoyed
+* I'm watching you
+* evil / I lied
+* nothing to do here
+* twitch
+* begging
+* challenge considered
+* Big eyeballs guy / milk face (lust, shock, interest)
+* oh god what have I done
+* big grin
+* derp 2
+* :)
+* f-
+* father
+* no
+* you.. what have you done
+* amazed / stars
+* you win this time
+* omg run
+* Actually.. it's not okay
+* gtfo
+* gaming
+* fapping
+* first
+
 			
 Layouts
 	
 	[ narration ]  / blaaaaaaaaa \   
-	               \ rage aaaaaa /		             		            
+	               \ rage aaaaaa / 
 	/   blah    \
 	\ trollface /
 		

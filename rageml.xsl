@@ -14,8 +14,8 @@
 	<variable name="NARRATION_H" select="50" /> <!-- Height of each narration block -->
 	<variable name="LABEL_H" select="30" /> <!-- Height reserved for character labels -->
 	<variable name="NAMESPACE" select="'http://markfrimston.co.uk/rageml'" /> <!-- Namespace URI -->
-	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted][lol]'" /> <!-- Face types with implied dialogue -->
-	<variable name="HAIR_SCALE" select="1.25" />
+	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted][lol][me-gusta]'" /> <!-- Face types with implied dialogue -->
+	<variable name="HAIR_SCALE" select="1.15" />
 	
 	<!-- Root template -->
 	<template match="/">
@@ -193,6 +193,48 @@
 		<variable name="textheight" select="$height - $imgsize - $LABEL_H" />
 
 		<choose>
+		
+			<!-- ME GUSTA -->
+			<when test="$face = 'me-gusta'">
+				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
+				<if test="$sex = 'f'">
+					<svg:image x="{$x + $width div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+							y="{$y + $textheight + $LABEL_H + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+							width="{$imgsize * $HAIR_SCALE}" height="{$imgsize * $HAIR_SCALE}" 
+							xlink:href="images/hair-back.png" />
+				</if>
+				<svg:image x="{$x + $width div 2 - $imgsize div 2}" 
+						y="{$y + $textheight + $LABEL_H}" width="{$imgsize}" 
+						height="{$imgsize}" xlink:href="images/{$face}.png"/>
+				<if test="$sex = 'f'">
+					<svg:image x="{$x + $width div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+							y="{$y + $textheight + $LABEL_H + $imgsize div 2 - ($imgsize * $HAIR_SCALE) div 2}" 
+							width="{$imgsize * $HAIR_SCALE}" height="{$imgsize * $HAIR_SCALE}" 
+							xlink:href="images/hair-front.png" />
+				</if>
+				<for-each select="$linenodes">
+					<variable name="linepos" select="count(preceding-sibling::*[
+						count($alllinenodes|.) = count($alllinenodes) ] )" />
+					<svg:text font-family="impact,sans-serif" fill="red" font-weight="bold"
+							font-size="{30 * $textsize}px"  text-anchor="middle"
+							y="{$y + 20 * $textsize + $textheight div $totallines * $linepos}">
+						<call-template name="wrap-text">
+							<with-param name="x" select="$x + $width div 2" />
+							<with-param name="chars" select="$width div (27 * $textsize)" />
+							<with-param name="lineheight" select="32 * $textsize" />
+							<with-param name="text">
+								<choose>
+									<when test="descendant::text()"><value-of select="descendant::text()" /></when>
+									<when test="descendant::rg:silent"></when>
+									<otherwise><value-of select="'ME GUSTA'" /></otherwise>
+								</choose>
+							</with-param>
+						</call-template>
+					</svg:text>
+				</for-each>
+			</when>
+			
+			<!-- LOL -->
 			<when test="$face = 'lol'">
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
 				<if test="$sex = 'f'">
@@ -255,6 +297,8 @@
 					</otherwise>
 				</choose>
 			</when>
+			
+			<!-- CHALLENGE ACCEPTED -->
 			<when test="$face = 'challenge-accepted'">
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
 				<!-- scale down hair and move up a bit to fit to head better -->
@@ -294,6 +338,8 @@
 					</svg:text>
 				</for-each>
 			</when>
+			
+			<!-- RAGE -->
 			<when test="$face = 'rage'">
 				<variable name="textsize" select="0.25 + ($width div $PANEL_W) * 0.75" />
 				<for-each select="$linenodes">
@@ -332,6 +378,8 @@
 							xlink:href="images/hair-front.png" />
 				</if>
 			</when>
+			
+			<!-- OTHERS -->
 			<otherwise>
 				<!-- hair back -->
 				<if test="$sex = 'f'">

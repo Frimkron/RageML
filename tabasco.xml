@@ -51,6 +51,11 @@
 		<e sex="m"><challenge-accepted /></e>
 	</panel>
 	<panel>
+		<a sex="f"><me-gusta /></a>
+		<trollface>You can say that again!</trollface>
+		<a-reply>ME GUSTA</a-reply>
+	</panel>
+	<panel>
 		<a><rage>Knock knock</rage></a>
 		<b sex="f"><challenge-accepted>Who's there?</challenge-accepted></b>
 		<a-reply>Doctor</a-reply>
