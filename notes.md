@@ -722,4 +722,18 @@ But what about narration?
 
 Forget closeups. I don't need the feature creep.
 
+- - - - - - - - - - - - - - - -
+
+Every face will only differ in 
+
+* text placement (if on own), 
+* font size, 
+* font colour, 
+* font family, 
+* face image, 
+* hair offset, 
+* hair scale, 
+* image alignment. 
+
+These could be parameters to a single template.
 

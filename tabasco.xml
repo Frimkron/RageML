@@ -52,8 +52,8 @@
 	</panel>
 	<panel>
 		<a sex="f"><me-gusta /></a>
-		<trollface>You can say that again!</trollface>
-		<a-reply>ME GUSTA</a-reply>
+		<!--<trollface>You can say that again!</trollface>
+		<a-reply>ME GUSTA, again</a-reply>-->
 	</panel>
 	<panel>
 		<a><rage>Knock knock</rage></a>
