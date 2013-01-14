@@ -5,6 +5,28 @@
 		xmlns:x="http://example.com/x"
 		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
+		<okay />
+		<trollface />
+	</panel>
+	<panel>
+		<a sex="f"><okay /></a>
+	</panel>
+	<panel>
+		<a sex="f"><forever-alone /></a>
+		<trollface />
+	</panel>
+	<panel>
+		<forever-alone />
+	</panel>
+	<panel>
+		<b sex="f"><rage /></b>
+		<a><trollface>Yeah</trollface></a>
+	</panel>
+	<panel>
+		<a sex="f"><challenge-accepted /></a>
+		<b><trollface /></b>
+	</panel>
+	<panel>
 		<e label="le best friend" sex="f">
 			<derp>I think McCulcan's performance was more refined in the 
 				second film and, well, that paint can on a string never
