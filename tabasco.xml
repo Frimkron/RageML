@@ -5,8 +5,8 @@
 		xmlns:x="http://example.com/x"
 		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
+		<a><trollface>This is a test</trollface></a>
 		<okay />
-		<trollface />
 	</panel>
 	<panel>
 		<a sex="f"><okay /></a>
@@ -16,6 +16,7 @@
 		<trollface />
 	</panel>
 	<panel>
+		<narration>Then...</narration>
 		<forever-alone />
 	</panel>
 	<panel>
@@ -38,6 +39,13 @@
 		<b label="le gardener and marriage counsellor">
 			<trollface>Yes I quite agree.</trollface>
 		</b>
+		<a> 
+		
+		
+		<rage>
+		
+		
+		</rage></a>
 	</panel>
 	<panel>
 		<e label="le vocational guidance councillor"><lol /></e>

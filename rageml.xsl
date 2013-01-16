@@ -5,12 +5,6 @@
 		xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:rg="http://markfrimston.co.uk/rageml">
 
-	<!-- TODO:
-		* lone text coordinates need better way to position relative to face
-		* hair for forlone and okay
-	-->
-	
-	
 	<output method="xml" version="1.0" encoding="utf-8"/>
 
 	<variable name="PANEL_W" select="350" /> <!-- Width of each panel -->
@@ -20,7 +14,8 @@
 	<variable name="NARRATION_H" select="50" /> <!-- Height of each narration block -->
 	<variable name="LABEL_H" select="30" /> <!-- Height reserved for character labels -->
 	<variable name="NAMESPACE" select="'http://markfrimston.co.uk/rageml'" /> <!-- Namespace URI -->
-	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted][lol][me-gusta][forever-alone][okay]'" /> <!-- Face types with implied dialogue -->
+	<!-- Face types with implied dialogue -->
+	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted][lol][me-gusta][forever-alone][okay]'" /> 
 	<variable name="HAIR_SCALE" select="1.15" />
 	
 	<!-- Root template -->
@@ -48,7 +43,8 @@
 		<variable name="panely" select="$BORDER_H + floor($panelnum div 2) * $PANEL_H" />
 		<!-- nodes representing lines of dialogue in this panel -->
 		<variable name="linenodes" select="$panelnode/*[
-			namespace-uri()=$NAMESPACE and local-name()!='narration' and ( descendant::text()
+			namespace-uri()=$NAMESPACE and local-name()!='narration' and ( 
+				descendant::text()[string-length(normalize-space()) &gt; 0]
 				or ( descendant-or-self::*[contains($WITH_DEF_TEXT,concat('[',local-name(),']'))]
 					 and not(descendant::rg:silent) ) ) ]" />			
 		<!-- nodes representing character presences in this panel -->
@@ -225,7 +221,7 @@
 					<with-param name="imgalign" select="'left'" />
 					<with-param name="lonefontsize" select="60" />
 					<with-param name="lonetextx" select="$width" />
-					<with-param name="lonetexty" select="$PANEL_H * 0.6" />
+					<with-param name="lonetexty" select="$height * 0.6" />
 					<with-param name="lonetextalign" select="'right'" />
 					<with-param name="hairsize" select="1.05" />
 					<with-param name="hairoffx" select="0.05" />
@@ -311,7 +307,7 @@
 					<with-param name="fontfamily" select="'sans-serif'" />
 					<with-param name="defaulttext" select="'okay'" />
 					<with-param name="lonetextx" select="10" />
-					<with-param name="lonetexty" select="$PANEL_H * 0.8" />
+					<with-param name="lonetexty" select="$height * 0.8" />
 					<with-param name="lonetextalign" select="'left'" />
 					<with-param name="lonefontsize" select="18" />
 					<with-param name="hairsize" select="0.85" />
@@ -366,8 +362,8 @@
 		<param name="lonefontcolour" select="$fontcolour" />
 		<param name="lonefontfamily" select="$fontfamily" />
 		<param name="lonetextalign" select="$textalign" />
-		<param name="lonetextx" select="$width div 2" />
-		<param name="lonetexty" select="50" />
+		<param name="lonetextx" select="$width * 0.5" />
+		<param name="lonetexty" select="$height * 0.15 " />
 		
 		<!-- prepare sizes -->
 		<variable name="imgsize">
@@ -466,7 +462,9 @@
 					<with-param name="lineheight" select="($linesize + 2) * $textsize" />
 					<with-param name="text">
 						<choose>
-							<when test="descendant::text()"><value-of select="descendant::text()" /></when>
+							<when test="descendant::text()[string-length(normalize-space()) &gt; 0]">
+								<value-of select="descendant::text()[string-length(normalize-space()) &gt; 0]" />
+							</when>
 							<when test="descendant::rg:silent"></when>
 							<otherwise><value-of select="$defaulttext" /></otherwise>
 						</choose>
@@ -732,23 +730,5 @@
 			</otherwise>
 		</choose>
 	</template>
-	
-	<!-- Find the combined lengths of the text nodes contained in the given nodes -->
-	<!--<template name="sum-lengths">
-		<param name="nodes" />
-		<param name="accumulated" select="0"/>
-		<variable name="val" select="$accumulated + string-length($nodes/text())" />
-		<choose>
-			<when test="$nodes/following-sibling::*">
-				<call-template name="sum-lengths"> 
-					<with-param name="nodes" select="$nodes/following-sibling::*" />
-					<with-param name="accumulated" select="$val" />
-				</call-template>
-			</when>
-			<otherwise>
-				<value-of select="$val" />
-			</otherwise>
-		</choose>
-	</template>-->
 	
 </stylesheet>

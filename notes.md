@@ -40,9 +40,9 @@ Feature TODO:
 Face list, priority order:
 
 * ~~me gusta~~
-* forever alone
+* ~~forever alone~~
 * poker face
-* okay
+* ~~okay~~
 * y u no
 * thinking
 * harp darp
@@ -50,6 +50,7 @@ Face list, priority order:
 * suspicious
 * FFFFFFF- black bg
 * catface
+* bragging
 * tears of joy
 * determined guy
 * fucking serious
@@ -71,11 +72,13 @@ Face list, priority order:
 * GASP black bg / omg
 * true story
 * eating cereal
+* spitting cereal
 * :|
 * :p
 * bad poker face
 * neil degrasse tyson / watch out guys we're dealing with a badass over here
 * aww yeah guy
+* o_O
 * oh stop it you
 * What's all this racket / mirada fija
 * bean / if you know what I mean
@@ -85,25 +88,36 @@ Face list, priority order:
 * close enough
 * pondering at computer
 * all the things
+* black hair looking shifty
 * annoyed
 * I'm watching you
 * evil / I lied
 * nothing to do here
 * twitch
 * begging
+* table flip
 * challenge considered
+* challenge rejected
+* fuck no
 * Big eyeballs guy / milk face (lust, shock, interest)
 * oh god what have I done
 * big grin
 * derp 2
 * :)
+* shocked / O.O
 * f-
 * father
 * no
 * you.. what have you done
 * amazed / stars
 * you win this time
+* feel like a ninja
+* grandma
+* grandpa
 * omg run
+* whistling guy
+* rainbow vomit
+* doc brown
 * Actually.. it's not okay
 * gtfo
 * gaming
