@@ -15,7 +15,8 @@
 	<variable name="LABEL_H" select="30" /> <!-- Height reserved for character labels -->
 	<variable name="NAMESPACE" select="'http://markfrimston.co.uk/rageml'" /> <!-- Namespace URI -->
 	<!-- Face types with implied dialogue -->
-	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted][lol][me-gusta][forever-alone][okay]'" /> 
+	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted][lol][me-gusta][forever-alone]
+		[okay][poker-face][better-than-expected][fucking-kidding][dude-come-on][fuck-yea]'" /> 
 	<variable name="HAIR_SCALE" select="1.15" />
 	
 	<!-- Root template -->
@@ -182,6 +183,174 @@
 
 		<!-- individual face settings -->
 		<choose>
+			<when test="$face = 'fuck-yea'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'fuck-yea.png'" />
+					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="defaulttext" select="'FUCK YEA'" />
+					<with-param name="fontsize" select="30" />
+					<with-param name="fontcolour" select="'red'" />
+					<with-param name="fontfamily" select="'impact,sans-serif'" />
+					<with-param name="fontweight" select="'bold'" />
+					<with-param name="lonetexty" select="$height * 0.1" />
+					<with-param name="hairsize" select="0.6" />
+					<with-param name="hairoffx" select="0.1" />
+					<with-param name="hairoffy" select="-0.25" />
+				</call-template>
+			</when>
+			<when test="$face = 'dude-come-on'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'dude-come-on.png'" />
+					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="defaulttext" select="'dude come on'" />
+					<with-param name="textscaled" select="false()" />
+				</call-template>
+			</when>
+			<when test="$face = 'fucking-kidding'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'fucking-kidding.png'" />
+					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="defaulttext" select="'ARE YOU FUCKING KIDDING ME?'" />
+					<with-param name="fontcolour" select="'green'" />
+					<with-param name="fontweight" select="'bold'" />
+					<with-param name="fontsize" select="20" />
+					<with-param name="fontfamily" select="'impact,sans-serif'" />
+					<with-param name="lonetexty" select="$height * 0.1" />
+					<with-param name="hairsize" select="1.1" />
+					<with-param name="hairoffx" select="0.1" />
+					<with-param name="hairoffy" select="0" />
+				</call-template>
+			</when>
+			<when test="$face = 'determined'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'determined.png'" />
+					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hairsize" select="1.1" />
+					<with-param name="hairoffx" select="0.05" />
+					<with-param name="hairoffy" select="-0.1" />
+					<with-param name="textscaled" select="false()" />
+				</call-template>
+			</when>
+			<when test="$face = 'ffff'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'ffff.png'" />
+					<with-param name="hashair" select="false()" />
+					<with-param name="imgalign" select="'right'" />
+					<with-param name="fontsize" select="30" />
+					<with-param name="fontcolour" select="'red'" />
+					<with-param name="fontweight" select="'bold'" />
+					<with-param name="fontfamily" select="'times new roman,serif'" />
+					<with-param name="lonetextx" select="5" />
+					<with-param name="lonetexty" select="$height * 0.1" />
+					<with-param name="lonetextalign" select="'left'" />
+					<with-param name="lonetextwidth" select="$width" />
+					<with-param name="lonebackground" select="'black'" />
+				</call-template>
+			</when>
+			<when test="$face = 'better-than-expected'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'better-than-expected.png'" />
+					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="defaulttext" select="'Everything went better than expected'" />
+					<with-param name="imgalign" select="'left'" />
+					<with-param name="fontsize" select="24" />
+					<with-param name="fontweight" select="'bold'" />
+					<with-param name="fontfamily" select="'sans-serif'" />
+					<with-param name="lonetextx" select="$width - 5" />
+					<with-param name="lonetexty" select="$height * 0.1" />
+					<with-param name="lonetextalign" select="'right'" />
+					<with-param name="lonetextwidth" select="$width" />
+					<with-param name="hairsize" select="0.85" />
+					<with-param name="hairoffx" select="-0.1" />
+					<with-param name="hairoffy" select="0" />
+				</call-template>
+			</when>
+			<when test="$face = 'y-u-no'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'y-u-no.png'" />
+					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="fontsize" select="30" />
+					<with-param name="fontweight" select="'bold'" />
+					<with-param name="fontfamily" select="'impact,sans-serif'" />
+					<with-param name="lonetextx" select="$width * 0.5" />
+					<with-param name="lonetexty" select="$height * 0.85" />
+					<with-param name="hairsize" select="0.85" />
+					<with-param name="hairoffx" select="0.15" />
+					<with-param name="hairoffy" select="-0.1" />
+				</call-template>
+			</when>
+			<when test="$face = 'poker-face'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'poker-face.png'" />
+					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="fontsize" select="30" />
+					<with-param name="fontcolour" select="'red'" />
+					<with-param name="fontweight" select="'bold'" />
+					<with-param name="fontfamily" select="'impact,sans-serif'" />
+					<with-param name="defaulttext" select="'POKER FACE'" />
+					<with-param name="lonetextx" select="$width * 0.5" />
+					<with-param name="lonetexty" select="$height * 0.85" />
+					<with-param name="hairsize" select="0.9" />
+					<with-param name="hairoffx" select="0.05" />
+					<with-param name="hairoffy" select="-0.08" />
+				</call-template>
+			</when>
 			<when test="$face = 'me-gusta'">
 				<call-template name="character-impl">
 					<with-param name="x" select="$x" />
@@ -364,6 +533,8 @@
 		<param name="lonetextalign" select="$textalign" />
 		<param name="lonetextx" select="$width * 0.5" />
 		<param name="lonetexty" select="$height * 0.15 " />
+		<param name="lonetextwidth" select="$width" />
+		<param name="lonebackground" select="'none'" />
 		
 		<!-- prepare sizes -->
 		<variable name="imgsize">
@@ -430,6 +601,15 @@
 				</otherwise>
 			</choose>
 		</variable>
+		<variable name="linewidth">
+			<choose><when test="$islone"><value-of select="$lonetextwidth" /></when>
+			<otherwise><value-of select="$width" /></otherwise></choose>
+		</variable>
+
+		<if test="$islone and $lonebackground != 'none'">
+			<svg:rect x="{$x}" y="{$y}" width="{$width}" height="{$height}" 
+				stroke="none" fill="$lonebackground" />
+		</if>
 		
 		<!-- Render face now if behind text -->
 		<if test="not($textbehind)">
@@ -458,7 +638,7 @@
 					font-size="{$linesize * $textsize}px"  text-anchor="{$lineanchor}" y="{$liney}">
 				<call-template name="wrap-text">
 					<with-param name="x" select="$linex" />
-					<with-param name="chars" select="$width div ($linesize * 0.75 * $textsize)" />
+					<with-param name="chars" select="$linewidth div ($linesize * 0.75 * $textsize)" />
 					<with-param name="lineheight" select="($linesize + 2) * $textsize" />
 					<with-param name="text">
 						<choose>

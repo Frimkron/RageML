@@ -47,11 +47,28 @@
 	<element name="c-reply" type="rg:attr-token" />
 	<element name="d-reply" type="rg:attr-token" />
 	<element name="e-reply" type="rg:attr-token" />
-	
+
+	<element name="better-than-expected" type="rg:attr-token" />
+	<element name="challenge-accepted" type="rg:attr-token" />	
 	<element name="derp" type="rg:attr-token" />
-	<element name="trollface" type="rg:attr-token" />
+	<element name="determined" type="rg:attr-token" />
+	<element name="dude-come-on" type="rg:attr-token" />
+	<element name="ffff" type="rg:attr-token" />
+	<element name="forever-alone" type="rg:attr-token" />
+	<element name="fucking-kidding" type="rg:attr-token" />
+	<element name="fuck-yea" type="rg:attr-token" />
+	<element name="herp" type="rg:attr-token" />
+	<element name="joy" type="rg:attr-token" />
+	<element name="lol" type="rg:attr-token" />
+	<element name="me-gusta" type="rg:attr-token" />
+	<element name="n_n" type="rg:attr-token" />
+	<element name="okay" type="rg:attr-token" />
+	<element name="poker-face" type="rg:attr-token" />
 	<element name="rage" type="rg:attr-token" />
-	<element name="challenge-accepted" type="rg:attr-token" />
+	<element name="suspicious" type="rg:attr-token" />
+	<element name="thinking" type="rg:attr-token" />
+	<element name="trollface" type="rg:attr-token" />
+	<element name="y-u-no" type="rg:attr-token" />
 
 	<!-- TODO -->
 	<elementt name="silent" type="token" />

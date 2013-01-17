@@ -39,24 +39,29 @@ Feature TODO:
 
 Face list, priority order:
 
+* ~~derp~~
+* ~~rage~~
+* ~~trollface~~
+* ~~lol~~
 * ~~me gusta~~
 * ~~forever alone~~
-* poker face
+* ~~poker face~~
 * ~~okay~~
-* y u no
-* thinking
-* harp darp
-* better than expected
-* suspicious
-* FFFFFFF- black bg
-* catface
+* ~~y u no~~
+* ~~thinking~~
+* ~~harp darp~~
+* ~~better than expected~~
+* ~~suspicious~~
+* ~~FFFFFFF- black bg~~
+* ~~catface~~
 * bragging
-* tears of joy
-* determined guy
-* fucking serious
+* ~~tears of joy~~
+* ~~determined guy~~
+* ~~fucking kidding~~
 * spongebob time cards
-* ¬_¬ / dude come on
-* fuck yea
+* ~~¬_¬ / dude come on~~
+* ~~fuck yea~~
+
 * T_T / numb face (horror, fear, loathing)
 * picard / facepalm
 * you don't say / nicolas cage
@@ -69,6 +74,7 @@ Face list, priority order:
 * chan mind blow / my brain is full of fuck
 * pffftttccchhhhppfffchhh
 * mother of god
+
 * GASP black bg / omg
 * true story
 * eating cereal

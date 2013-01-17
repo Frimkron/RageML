@@ -5,6 +5,27 @@
 		xmlns:x="http://example.com/x"
 		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
+		<a sex="f"><dude-come-on><silent /></dude-come-on></a>
+		<b sex="f"><fuck-yea/></b>
+	</panel>
+	<panel>
+		<a sex="f"><better-than-expected /></a>
+		<suspicious>foobar</suspicious>
+		<!--<okay />-->
+		<!--<trollface />-->
+	</panel>
+	<panel>
+		<a sex="f"><herp /></a>
+		<derp />
+		<trollface>Yeh</trollface>
+	</panel>
+	<panel>
+		<a sex="f">
+			<poker-face>Yes indeed</poker-face>
+		</a>
+		<trollface>What</trollface>
+	</panel>
+	<panel>
 		<a><trollface>This is a test</trollface></a>
 		<okay />
 	</panel>
