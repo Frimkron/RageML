@@ -16,7 +16,7 @@
 	<variable name="NAMESPACE" select="'http://markfrimston.co.uk/rageml'" /> <!-- Namespace URI -->
 	<!-- Face types with implied dialogue -->
 	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted][lol][me-gusta][forever-alone]
-		[okay][poker-face][better-than-expected][fucking-kidding][dude-come-on][fuck-yea]'" /> 
+		[okay][poker-face][better-than-expected][fucking-kidding][dude-come-on][fuck-yea][you-dont-say]'" /> 
 	<variable name="HAIR_SCALE" select="1.15" />
 	
 	<!-- Root template -->
@@ -183,6 +183,64 @@
 
 		<!-- individual face settings -->
 		<choose>
+			<when test="$face = 'you-dont-say'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'you-dont-say.png'" />
+					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="defaulttext" select="'YOU DONT SAY?'" />
+					<with-param name="fontsize" select="30" />
+					<with-param name="fontcolour" select="'red'" />
+					<with-param name="fontweight" select="'bold'" />
+					<with-param name="fontfamily" select="'impact,sans-serif'" />
+					<with-param name="hairsize" select="0.55" />
+					<with-param name="hairoffx" select="0.07" />
+					<with-param name="hairoffy" select="-0.05" />
+				</call-template>
+			</when>
+			<when test="$face = 'facepalm'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'facepalm.png'" />
+					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="textscaled" select="false()" />
+					<with-param name="hairsize" select="0.4" />
+					<with-param name="hairoffx" select="0.17" />
+					<with-param name="hairoffy" select="-0.1" />
+				</call-template>
+			</when>
+			<when test="$face = 'numb'">
+				<call-template name="character-impl">
+					<with-param name="x" select="$x" />
+					<with-param name="y" select="$y" />
+					<with-param name="width" select="$width" />
+					<with-param name="height" select="$height" />
+					<with-param name="linenodes" select="$linenodes" />
+					<with-param name="alllinenodes" select="$alllinenodes" />
+					<with-param name="label" select="$label" />
+					<with-param name="image" select="'numb.png'" />
+					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="textscaled" select="false()" />
+					<with-param name="lonebackground" select="'black'" />
+					<with-param name="lonefontcolour" select="'white'" />
+					<with-param name="hairsize" select="1.05" />
+					<with-param name="hairoffx" select="0.05" />
+					<with-param name="hairoffy" select="0" />
+					<with-param name="lonelabelcolour" select="'white'" />
+				</call-template>
+			</when>
 			<when test="$face = 'fuck-yea'">
 				<call-template name="character-impl">
 					<with-param name="x" select="$x" />
@@ -280,6 +338,7 @@
 					<with-param name="lonetextalign" select="'left'" />
 					<with-param name="lonetextwidth" select="$width" />
 					<with-param name="lonebackground" select="'black'" />
+					<with-param name="lonelabelcolour" select="'white'" />
 				</call-template>
 			</when>
 			<when test="$face = 'better-than-expected'">
@@ -535,6 +594,7 @@
 		<param name="lonetexty" select="$height * 0.15 " />
 		<param name="lonetextwidth" select="$width" />
 		<param name="lonebackground" select="'none'" />
+		<param name="lonelabelcolour" select="'black'" />
 		
 		<!-- prepare sizes -->
 		<variable name="imgsize">
@@ -605,6 +665,10 @@
 			<choose><when test="$islone"><value-of select="$lonetextwidth" /></when>
 			<otherwise><value-of select="$width" /></otherwise></choose>
 		</variable>
+		<variable name="labelcolour">
+			<choose><when test="$islone"><value-of select="$lonelabelcolour" /></when>
+			<otherwise><value-of select="'black'" /></otherwise></choose>
+		</variable>
 
 		<if test="$islone and $lonebackground != 'none'">
 			<svg:rect x="{$x}" y="{$y}" width="{$width}" height="{$height}" 
@@ -669,12 +733,15 @@
 
 		<!-- render label -->
 		<if test="$label">
-			<call-template name="dialogue-text">
-				<with-param name="x" select="$x + $width div 2" />
-				<with-param name="y" select="$y + $textheight" />
-				<with-param name="width" select="$width" />
-				<with-param name="text" select="concat('* ',$label)" />
-			</call-template>
+			<svg:text font-family="courier new,courier,monospace" fill="{$labelcolour}"
+					font-size="16px"  text-anchor="middle" y="{$y + $textheight}">
+				<call-template name="wrap-text">
+					<with-param name="x" select="$x + $width div 2" />
+					<with-param name="chars" select="round($width div 11)" />
+					<with-param name="lineheight" select="18" />
+					<with-param name="text" select="normalize-space(concat('* ',$label))" />
+				</call-template>
+			</svg:text>
 		</if>
 		
 	</template>

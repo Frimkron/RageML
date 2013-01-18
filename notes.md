@@ -61,10 +61,9 @@ Face list, priority order:
 * spongebob time cards
 * ~~¬_¬ / dude come on~~
 * ~~fuck yea~~
-
-* T_T / numb face (horror, fear, loathing)
-* picard / facepalm
-* you don't say / nicolas cage
+* ~~T_T / numb face (horror, fear, loathing)~~
+* ~~picard / facepalm~~
+* ~~you don't say / nicolas cage~~
 * mercury air punch
 * not bad / obama
 * long neck

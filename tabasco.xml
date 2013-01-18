@@ -5,8 +5,8 @@
 		xmlns:x="http://example.com/x"
 		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
-		<a sex="f"><dude-come-on><silent /></dude-come-on></a>
-		<b sex="f"><fuck-yea/></b>
+		<a label="le foo" sex="f"><you-dont-say></you-dont-say></a>
+		<!--<b label="le troll"><trollface></trollface></b>-->
 	</panel>
 	<panel>
 		<a sex="f"><better-than-expected /></a>
