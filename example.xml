@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<?xml-stylesheet type="text/xsl" href="http://markfrimston.co.uk/rageml/rageml.xsl"?>
+<?xml-stylesheet type="text/xsl" href="rageml.xsl"?>
 <comic 	xmlns="http://markfrimston.co.uk/rageml"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://markfrimston.co.uk/rageml http://markfrimston.co.uk/rageml/rageml.xsd">
+		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
 		<trollface />
 	</panel>
