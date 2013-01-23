@@ -18,7 +18,9 @@
 	<variable name="WITH_DEF_TEXT" select="'[rage][challenge-accepted][lol][me-gusta][forever-alone]
 		[okay][poker-face][better-than-expected][fucking-kidding][dude-come-on][fuck-yea][you-dont-say]
 		[not-bad][are-you-serious][sweet-jesus][bitch-please][full-of-fuck][pffftttchh][mother-of-god]'" /> 
-	<variable name="HAIR_SCALE" select="1.15" />
+	<variable name="HAIR_SCALE" select="1.15" /> <!-- Base size of hair graphic -->
+	<variable name="IMAGE_ROOT" select="http://markfrimston.co.uk/rageml/images" /> <!-- path to graphics -->
+	
 	
 	<!-- Root template -->
 	<template match="/">
@@ -996,16 +998,16 @@
 		<if test="$hashair">
 			<svg:image x="{$hairxposflipped}" y="{$hairypos}"
 				width="{$size * $HAIR_SCALE * $hairsize}" height="{$size * $HAIR_SCALE * $hairsize}" 
-				xlink:href="images/hair-back.png" transform="scale({$hairxscale},1)"/>
+				xlink:href="${IMAGE_ROOT}/hair-back.png" transform="scale({$hairxscale},1)"/>
 		</if>
 		<!-- face -->
 		<svg:image x="{$x}" y="{$y}" width="{$size}" height="{$size}" 
-				xlink:href="images/{$name}" />
+				xlink:href="${IMAGE_ROOT}/{$name}" />
 		<!-- hair front -->
 		<if test="$hashair">
 			<svg:image x="{$hairxposflipped}" y="{$hairypos}"
 				width="{$size * $HAIR_SCALE * $hairsize}" height="{$size * $HAIR_SCALE * $hairsize}" 
-				xlink:href="images/hair-front.png" transform="scale({$hairxscale},1)"/>
+				xlink:href="${IMAGE_ROOT}/hair-front.png" transform="scale({$hairxscale},1)"/>
 		</if>
 	</template>
 
