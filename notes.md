@@ -64,15 +64,15 @@ Face list, priority order:
 * ~~T_T / numb face (horror, fear, loathing)~~
 * ~~picard / facepalm~~
 * ~~you don't say / nicolas cage~~
-* mercury air punch
-* not bad / obama
-* long neck
-* seriously? suit guy / are you serious
-* feels good man / sweet jesus
-* bitch please / yao ming
-* chan mind blow / my brain is full of fuck
-* pffftttccchhhhppfffchhh
-* mother of god
+* ~~mercury air punch~~
+* ~~not bad / obama~~
+* ~~long neck~~
+* ~~seriously? suit guy / are you serious~~
+* ~~feels good man / sweet jesus~~
+* ~~bitch please / yao ming~~
+* ~~chan mind blow / my brain is full of fuck~~
+* ~~pffftttccchhhhppfffchhh~~
+* ~~mother of god~~
 
 * GASP black bg / omg
 * true story

@@ -2,11 +2,10 @@
 <?xml-stylesheet type="text/xsl" href="rageml.xsl"?>
 <comic 	xmlns="http://markfrimston.co.uk/rageml"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:x="http://example.com/x"
 		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
-		<a label="le foo" sex="f"><you-dont-say></you-dont-say></a>
-		<!--<b label="le troll"><trollface></trollface></b>-->
+		<a sex="f"><mother-of-god/></a>
+		<!--<okay />-->
 	</panel>
 	<panel>
 		<a sex="f"><better-than-expected /></a>
@@ -15,7 +14,7 @@
 		<!--<trollface />-->
 	</panel>
 	<panel>
-		<a sex="f"><herp /></a>
+		<a sex="f"><herp> lol <silent /> lol </herp></a>
 		<derp />
 		<trollface>Yeh</trollface>
 	</panel>
@@ -33,7 +32,8 @@
 		<a sex="f"><okay /></a>
 	</panel>
 	<panel>
-		<a sex="f"><forever-alone /></a>
+		<d />
+		<a sex="m"><derp>Hi</derp></a>
 		<trollface />
 	</panel>
 	<panel>
@@ -96,10 +96,10 @@
 		<a><trollface>Who's there?</trollface></a>
 		<!--<c><derp /></c>-->
 		<d sex="f"><rage></rage></d>
+		<e sex="m"><challenge-accepted /></e>
 		<b-reply>Doctor</b-reply>
 		<a-reply>Doctor Who?</a-reply>
 		<b-reply>*snicker snicker*</b-reply>
-		<e sex="m"><challenge-accepted /></e>
 	</panel>
 	<panel>
 		<a sex="f"><me-gusta /></a>
@@ -110,7 +110,7 @@
 		<a><rage>Knock knock</rage></a>
 		<b sex="f"><challenge-accepted>Who's there?</challenge-accepted></b>
 		<a-reply>Doctor</a-reply>
-		<b-reply><silent/></b-reply>
+		<b-reply></b-reply>
 		<narration>Noddy, the little man with the red and yellow car.</narration>
 	</panel>
 </comic>

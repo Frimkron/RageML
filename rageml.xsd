@@ -6,31 +6,39 @@
 
 	<element name="comic">
 		<complexType>
-			<sequence minOccurs="1" maxOccurs="unbounded">
-				<element ref="rg:panel" />
-			</sequence>
-			<anyAttribute />
+			<complexContent>
+				<restriction base="anyType">
+					<sequence>
+						<element ref="rg:panel" minOccurs="1" maxOccurs="unbounded" />
+					</sequence>
+					<anyAttribute />
+				</restriction>
+			</complexContent>
 		</complexType>
 	</element>
 	
 	<element name="panel">
 		<complexType>
-			<sequence>
-				<element ref="rg:narration" minOccurs="0" maxOccurs="1" />
-				<group ref="rg:unordered-characters" minOccurs="0"/>
-				<choice minOccurs="0" maxOccurs="unbounded">
-					<choice>
-						<element ref="rg:a-reply" />
-						<element ref="rg:b-reply" />
-						<element ref="rg:c-reply" />
-						<element ref="rg:d-reply" />
-						<element ref="rg:e-reply" />
-					</choice>
-					<group ref="rg:faces" />
-				</choice>
-				<element ref="rg:narration" minOccurs="0" maxOccurs="1" />
-			</sequence>
-			<anyAttribute />
+			<complexContent>
+				<restriction base="anyType">
+					<sequence>
+						<element ref="rg:narration" minOccurs="0" maxOccurs="1" />
+						<group ref="rg:unordered-characters" minOccurs="0"/>
+						<choice minOccurs="0" maxOccurs="unbounded">
+							<choice>
+								<element ref="rg:a-reply" />
+								<element ref="rg:b-reply" />
+								<element ref="rg:c-reply" />
+								<element ref="rg:d-reply" />
+								<element ref="rg:e-reply" />
+							</choice>
+							<group ref="rg:faces" />
+						</choice>
+						<element ref="rg:narration" minOccurs="0" maxOccurs="1" />
+					</sequence>
+					<anyAttribute />
+				</restriction>
+			</complexContent>
 		</complexType>
 	</element>
 	
@@ -48,34 +56,63 @@
 	<element name="d-reply" type="rg:attr-token" />
 	<element name="e-reply" type="rg:attr-token" />
 
-	<element name="better-than-expected" type="rg:attr-token" />
-	<element name="challenge-accepted" type="rg:attr-token" />	
-	<element name="derp" type="rg:attr-token" />
-	<element name="determined" type="rg:attr-token" />
-	<element name="dude-come-on" type="rg:attr-token" />
-	<element name="ffff" type="rg:attr-token" />
-	<element name="forever-alone" type="rg:attr-token" />
-	<element name="fucking-kidding" type="rg:attr-token" />
-	<element name="fuck-yea" type="rg:attr-token" />
-	<element name="herp" type="rg:attr-token" />
-	<element name="joy" type="rg:attr-token" />
-	<element name="lol" type="rg:attr-token" />
-	<element name="me-gusta" type="rg:attr-token" />
-	<element name="n_n" type="rg:attr-token" />
-	<element name="okay" type="rg:attr-token" />
-	<element name="poker-face" type="rg:attr-token" />
-	<element name="rage" type="rg:attr-token" />
-	<element name="suspicious" type="rg:attr-token" />
-	<element name="thinking" type="rg:attr-token" />
-	<element name="trollface" type="rg:attr-token" />
-	<element name="y-u-no" type="rg:attr-token" />
+	<element name="are-you-serious" type="rg:face" />
+	<element name="better-than-expected" type="rg:face" />
+	<element name="bitch-please" type="rg:face" />
+	<element name="challenge-accepted" type="rg:face" />	
+	<element name="derp" type="rg:face" />
+	<element name="determined" type="rg:face" />
+	<element name="dude-come-on" type="rg:face" />
+	<element name="facepalm" type="rg:face" />
+	<element name="ffff" type="rg:face" />
+	<element name="forever-alone" type="rg:face" />
+	<element name="freddie-mercury" type="rg:face" />
+	<element name="fucking-kidding" type="rg:face" />
+	<element name="fuck-yea" type="rg:face" />
+	<element name="full-of-fuck" type="rg:face" />
+	<element name="herp" type="rg:face" />
+	<element name="joy" type="rg:face" />
+	<element name="lol" type="rg:face" />
+	<element name="long-neck" type="rg:face" />
+	<element name="me-gusta" type="rg:face" />
+	<element name="mother-of-god" type="rg:face" />
+	<element name="n_n" type="rg:face" />
+	<element name="not-bad" type="rg:face" />
+	<element name="numb" type="rg:face" />
+	<element name="okay" type="rg:face" />
+	<element name="pffftttchh" type="rg:face" />
+	<element name="poker-face" type="rg:face" />
+	<element name="rage" type="rg:face" />
+	<element name="suspicious" type="rg:face" />
+	<element name="sweet-jesus" type="rg:face" />
+	<element name="thinking" type="rg:face" />
+	<element name="trollface" type="rg:face" />
+	<element name="y-u-no" type="rg:face" />
+	<element name="you-dont-say" type="rg:face" />
 
-	<!-- TODO -->
-	<elementt name="silent" type="token" />
+	<element name="silent">
+		<complexType>
+			<complexContent>
+				<restriction base="anyType">
+					<anyAttribute />
+				</restriction>
+			</complexContent>
+		</complexType>
+	</element>
 	
 	<!-- ====================================================== -->
 
-
+	<complexType name="face">
+		<complexContent mixed="true">
+			<restriction base="anyType">
+				<sequence>
+					<element ref="rg:silent" minOccurs="0" maxOccurs="1" />
+				</sequence>
+				<anyAttribute />
+			</restriction>
+		</complexContent>
+	</complexType>
+	
 	<complexType name="attr-token">
 		<simpleContent>
 			<extension base="token">
@@ -85,16 +122,20 @@
 	</complexType>
 	
 	<complexType name="character">
-		<group ref="rg:faces" minOccurs="0" maxOccurs="1" />
-		<attribute name="label" type="token" />
-		<attribute name="sex">
-			<simpleType>
-				<restriction base="token">
-					<pattern value="m|f" />
-				</restriction>
-			</simpleType>
-		</attribute>
-		<anyAttribute />
+		<complexContent>
+			<restriction base="anyType">
+				<group ref="rg:faces" minOccurs="0" maxOccurs="1" />
+				<attribute name="label" type="token" />
+				<attribute name="sex">
+					<simpleType>
+						<restriction base="token">
+							<pattern value="m|f" />
+						</restriction>
+					</simpleType>
+				</attribute>
+				<anyAttribute />
+			</restriction>
+		</complexContent>
 	</complexType>
 	
 	<group name="faces">
@@ -103,6 +144,39 @@
 			<element ref="rg:trollface" />
 			<element ref="rg:rage" />
 			<element ref="rg:challenge-accepted" />
+			<element ref="rg:are-you-serious" />
+			<element ref="rg:better-than-expected" />
+			<element ref="rg:bitch-please" />
+			<element ref="rg:challenge-accepted" />	
+			<element ref="rg:derp" />
+			<element ref="rg:determined" />
+			<element ref="rg:dude-come-on" />
+			<element ref="rg:facepalm" />
+			<element ref="rg:ffff" />
+			<element ref="rg:forever-alone" />
+			<element ref="rg:freddie-mercury" />
+			<element ref="rg:fucking-kidding" />
+			<element ref="rg:fuck-yea" />
+			<element ref="rg:full-of-fuck" />
+			<element ref="rg:herp" />
+			<element ref="rg:joy" />
+			<element ref="rg:lol" />
+			<element ref="rg:long-neck" />
+			<element ref="rg:me-gusta" />
+			<element ref="rg:mother-of-god" />
+			<element ref="rg:n_n" />
+			<element ref="rg:not-bad" />
+			<element ref="rg:numb" />
+			<element ref="rg:okay" />
+			<element ref="rg:pffftttchh" />
+			<element ref="rg:poker-face" />
+			<element ref="rg:rage" />
+			<element ref="rg:suspicious" />
+			<element ref="rg:sweet-jesus" />
+			<element ref="rg:thinking" />
+			<element ref="rg:trollface" />
+			<element ref="rg:y-u-no" />
+			<element ref="rg:you-dont-say" />
 		</choice>
 	</group>
 	
