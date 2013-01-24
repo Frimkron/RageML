@@ -4,6 +4,26 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
-		<trollface />
+		<a sex="f" label="le girlfriend">
+			<trollface>
+				Check out this new cola "T-abasco"
+			</trollface>
+		</a>
+		<b sex="m" label="le me" />
+	</panel>
+	<panel>
+		<b />
+		<a>
+			Bet you can't drink a whole bottle!
+		</a>
+		<pffftttchh />
+	</panel>
+	<panel>
+		<challenge-accepted />
+	</panel>
+	<panel>
+		<narration>Later...</narration>
+		<rage />
 	</panel>
 </comic>
+

@@ -696,7 +696,7 @@
 					<with-param name="defaulttext" select="'FFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU'" />
 					<with-param name="textalign" select="'left'" />
 					<with-param name="textbehind" select="true()" />
-					<with-param name="lonetextx" select="$x - 20" />
+					<with-param name="lonetextx" select=" - 20" />
 					<with-param name="lonetexty" select="0" />
 					<with-param name="imgalign" select="'left'" />
 					<with-param name="hairoffx" select="0.05" />
