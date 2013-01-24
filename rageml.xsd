@@ -122,11 +122,11 @@
 	</complexType>
 	
 	<complexType name="character">
-		<complexContent>
+		<complexContent mixed="true">
 			<restriction base="anyType">
 				<group ref="rg:faces" minOccurs="0" maxOccurs="1" />
 				<attribute name="label" type="token" />
-				<attribute name="sex">
+				<attribute name="gender">
 					<simpleType>
 						<restriction base="token">
 							<pattern value="m|f" />

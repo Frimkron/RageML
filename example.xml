@@ -4,12 +4,12 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://markfrimston.co.uk/rageml rageml.xsd">
 	<panel>
-		<a sex="f" label="le girlfriend">
+		<a gender="f" label="le girlfriend">
 			<trollface>
 				Check out this new cola "T-abasco"
 			</trollface>
 		</a>
-		<b sex="m" label="le me" />
+		<b gender="m" label="le me" />
 	</panel>
 	<panel>
 		<b />

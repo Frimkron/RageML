@@ -39,8 +39,8 @@
 		<param name="panelnum" select="0"/>
 		<!-- default states of characters' faces as of previous panel -->
 		<param name="def-faces" select="'[a:derp][b:derp][c:derp][d:derp][e:derp]'" />
-		<!-- default sexes of characters as of previous panel -->
-		<param name="def-sexes" select="'[a:m][b:m][c:m][d:m][e:m]'" />
+		<!-- default genders of characters as of previous panel -->
+		<param name="def-genders" select="'[a:m][b:m][c:m][d:m][e:m]'" />
 		
 		<!-- absolute position of panel -->
 		<variable name="panelx" select="$BORDER_W + ($panelnum mod 2) * $PANEL_W" />
@@ -62,12 +62,12 @@
 				<with-param name="def-faces" select="$def-faces" />
 			</call-template>
 		</variable>
-		<!-- current sexes of characters after being overridden -->
-		<variable name="sexes">
-			<call-template name="make-sexes">
+		<!-- current genders of characters after being overridden -->
+		<variable name="genders">
+			<call-template name="make-genders">
 				<with-param name="charnodes" select="$charnodes" />
 				<with-param name="elements" select="'abcde'" />
-				<with-param name="def-sexes" select="$def-sexes" />
+				<with-param name="def-genders" select="$def-genders" />
 			</call-template>
 		</variable>
 		<variable name="topnarration" select="$panelnode/rg:narration[not(preceding-sibling::*)]" />
@@ -130,12 +130,12 @@
 							</otherwise>
 						</choose>
 					</with-param>
-					<!-- for named characters, look up overridden sex. For others, just default to male -->
-					<with-param name="sex">
+					<!-- for named characters, look up overridden gender. For others, just default to male -->
+					<with-param name="gender">
 						<choose>
 							<when test="string-length($elname) = 1">
 								<value-of select="substring-before(substring-after(
-									$sexes,concat('[',$elname,':')),']')" />
+									$genders,concat('[',$elname,':')),']')" />
 							</when>
 							<otherwise>
 								<value-of select="'m'" />
@@ -165,7 +165,7 @@
 				<with-param name="panelnum" select="$panelnum + 1" />
 				<!-- pass overidden character properties through to next panel -->
 				<with-param name="def-faces" select="$faces" />
-				<with-param name="def-sexes" select="$sexes" />
+				<with-param name="def-genders" select="$genders" />
 			</call-template>
 		</if>
 		
@@ -181,7 +181,7 @@
 		<param name="linenodes" />
 		<param name="alllinenodes" />
 		<param name="face" />
-		<param name="sex" />		
+		<param name="gender" />		
 		<param name="label" />
 
 		<!-- individual face settings -->
@@ -196,7 +196,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'mother-of-god.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="defaulttext" select="'MOTHER OF GOD...'" />
 					<with-param name="fontsize" select="20" />
 					<with-param name="fontweight" select="'bold'" />
@@ -218,7 +218,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'pffftttchh.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="defaulttext" select="'PFFFTTTCHHCHHCHHHCHHPFFFPFFFFTCHPFFFFFTTCHHTPFPFFCHHCHHHHCHHCHPFFFTTTCHHCHHCHHHCHHPFFFPFFFFTCHPFFFFFTTCHHTPFPFFCHHCHHHHCHHCHPFFFTTTCHHCHHCHHHCHHPFFFPFFFFTCHPFFFFFTTCHHTPFPFFCHHCHHHHCHHCHPFFFTTTCHHCHHCHHHCHHPFFFPFFFFTCHPFFFFFTTCHHTPFPFFCHHCHHHHCHHCHPFFFTTTCHHCHHCHHHCHHPFFFPFFFFTCHPFFFFFTTCHHTPFPFFCHHCHHHHCHHCHPFFFTTTCHHCHHCHHHCHHPFFFPFFFFTCHPFFFFFTTCHHTPFPFFCHHCHHHHCHHCHPFFFTTTCHHCHHCHHHCHHPFFFPFFFFTCHPFFFF'" />
 					<with-param name="fontsize" select="24" />
 					<with-param name="fontweight" select="'bold'" />
@@ -245,7 +245,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'full-of-fuck.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="defaulttext" select="'MY MIND IS FULL OF FUCK'" />
 					<with-param name="fontsize" select="20" />
 					<with-param name="fontweight" select="'bold'" />
@@ -266,7 +266,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'bitch-please.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="defaulttext" select="'BITCH PLEASE'" />
 					<with-param name="fontsize" select="30" />
 					<with-param name="fontweight" select="'bold'" />
@@ -289,7 +289,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'sweet-jesus.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="defaulttext" select="'SWEET JESUS HAVE MERCY'" />
 					<with-param name="fontsize" select="20" />
 					<with-param name="fontweight" select="'bold'" />
@@ -315,7 +315,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image">
-						<choose><when test="$sex = 'f'"><value-of select="'are-you-serious-f.png'" /></when>
+						<choose><when test="$gender = 'f'"><value-of select="'are-you-serious-f.png'" /></when>
 						<otherwise><value-of select="'are-you-serious.png'" /></otherwise></choose>
 					</with-param>
 					<with-param name="hashair" select="false()" />
@@ -336,7 +336,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'long-neck.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="textscaled" select="false()" />
 					<with-param name="hairsize" select="0.275" /> 
 					<with-param name="hairoffx" select="-0.375" />
@@ -353,7 +353,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'not-bad.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="fontsize" select="30" />
 					<with-param name="fontcolour" select="'red'" />
 					<with-param name="fontweight" select="'bold'" />
@@ -376,7 +376,7 @@
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'freddie-mercury.png'" />
 					<with-param name="textscaled" select="false()" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="hairsize" select="0.25" /> 
 					<with-param name="hairoffx" select="-0.75" />
 					<with-param name="hairoffy" select="-0.01" />
@@ -393,7 +393,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'you-dont-say.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="defaulttext" select="'YOU DONT SAY?'" />
 					<with-param name="fontsize" select="30" />
 					<with-param name="fontcolour" select="'red'" />
@@ -415,7 +415,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'facepalm.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="textscaled" select="false()" />
 					<with-param name="hairsize" select="0.35" />
 					<with-param name="hairoffx" select="-0.45" />
@@ -433,7 +433,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'numb.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="textscaled" select="false()" />
 					<with-param name="lonebackground" select="'black'" />
 					<with-param name="lonefontcolour" select="'white'" />
@@ -453,7 +453,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'fuck-yea.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="defaulttext" select="'FUCK YEA'" />
 					<with-param name="fontsize" select="30" />
 					<with-param name="fontcolour" select="'red'" />
@@ -475,7 +475,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'dude-come-on.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="defaulttext" select="'dude come on'" />
 					<with-param name="textscaled" select="false()" />
 				</call-template>
@@ -490,7 +490,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'fucking-kidding.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="defaulttext" select="'ARE YOU FUCKING KIDDING ME?'" />
 					<with-param name="fontcolour" select="'green'" />
 					<with-param name="fontweight" select="'bold'" />
@@ -512,7 +512,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'determined.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="hairsize" select="1.1" />
 					<with-param name="hairoffx" select="0.05" />
 					<with-param name="hairoffy" select="-0.1" />
@@ -553,7 +553,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'better-than-expected.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="defaulttext" select="'Everything went better than expected'" />
 					<with-param name="imgalign" select="'left'" />
 					<with-param name="fontsize" select="24" />
@@ -578,7 +578,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'y-u-no.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="fontsize" select="30" />
 					<with-param name="fontweight" select="'bold'" />
 					<with-param name="fontfamily" select="'impact,sans-serif'" />
@@ -599,7 +599,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'poker-face.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="fontsize" select="30" />
 					<with-param name="fontcolour" select="'red'" />
 					<with-param name="fontweight" select="'bold'" />
@@ -622,7 +622,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'me-gusta.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="hairsize" select="1.1" />
 					<with-param name="hairoffx" select="0.05" />
 					<with-param name="fontsize" select="30" />
@@ -642,7 +642,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'lol.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="fontsize" select="40" />
 					<with-param name="fontcolour" select="'red'" />
 					<with-param name="fontweight" select="'bold'" />
@@ -668,7 +668,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'challenge-accepted.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="fontsize" select="24" />
 					<with-param name="fontweight" select="'bold'" />
 					<with-param name="fontfamily" select="'impact,sans-serif'" />
@@ -688,7 +688,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'rage.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="fontsize" select="30" />
 					<with-param name="fontcolour" select="'red'" />
 					<with-param name="fontweight" select="'bold'" />
@@ -712,7 +712,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'forever-alone.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="fontsize" select="24" />
 					<with-param name="fontweight" select="'bold'" />
 					<with-param name="fontfamily" select="'sans-serif'" />
@@ -731,7 +731,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="'okay.png'" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="fontsize" select="24" />
 					<with-param name="fontweight" select="'bold'" />
 					<with-param name="fontfamily" select="'sans-serif'" />
@@ -755,7 +755,7 @@
 					<with-param name="alllinenodes" select="$alllinenodes" />
 					<with-param name="label" select="$label" />
 					<with-param name="image" select="concat($face,'.png')" />
-					<with-param name="hashair" select="$sex = 'f'" />
+					<with-param name="hashair" select="$gender = 'f'" />
 					<with-param name="textscaled" select="false()" />
 				</call-template>
 			</otherwise>
@@ -1053,26 +1053,26 @@
 		</choose>
 	</template>
 	
-	<!-- Prepares character sex data for the given named character elements by
-		overriding the given defaults with any sex specified in the character nodes -->
-	<template name="make-sexes">
+	<!-- Prepares character gender data for the given named character elements by
+		overriding the given defaults with any gender specified in the character nodes -->
+	<template name="make-genders">
 		<param name="charnodes" />
-		<param name="def-sexes" />
+		<param name="def-genders" />
 		<param name="elements" />
-		<param name="curr-sexes" select="''" />
+		<param name="curr-genders" select="''" />
 		<!-- current named character element name -->
 		<variable name="el" select="substring($elements,1,1)" />
-		<!-- if character node has sex attribute, override with this sex,
+		<!-- if character node has gender attribute, override with this gender,
 				otherwise look up default -->
-		<variable name="sexes">
-			<value-of select="concat($curr-sexes,'[',$el,':')" />
+		<variable name="genders">
+			<value-of select="concat($curr-genders,'[',$el,':')" />
 			<choose>
-				<when test="$charnodes[local-name()=$el]/@sex">
-					<value-of select="$charnodes[local-name()=$el]/@sex" />
+				<when test="$charnodes[local-name()=$el]/@gender">
+					<value-of select="$charnodes[local-name()=$el]/@gender" />
 				</when>
 				<otherwise>
 					<value-of select="substring-before(substring-after(
-						$def-sexes,concat('[',$el,':')),']')" />
+						$def-genders,concat('[',$el,':')),']')" />
 				</otherwise>
 			</choose>
 			<value-of select="']'" />
@@ -1080,15 +1080,15 @@
 		<!-- Recurse to process next named character element, or output result if at end -->
 		<choose>
 			<when test="string-length($elements) &gt; 1">
-				<call-template name="make-sexes">
+				<call-template name="make-genders">
 					<with-param name="charnodes" select="$charnodes" />
-					<with-param name="def-sexes" select="$def-sexes" />
+					<with-param name="def-genders" select="$def-genders" />
 					<with-param name="elements" select="substring($elements,2)" />
-					<with-param name="curr-sexes" select="$sexes" />
+					<with-param name="curr-genders" select="$genders" />
 				</call-template>
 			</when>
 			<otherwise>
-				<value-of select="$sexes" />
+				<value-of select="$genders" />
 			</otherwise>	
 		</choose>
 	</template>
